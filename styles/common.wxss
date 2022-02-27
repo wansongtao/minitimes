@@ -1,0 +1,15 @@
+/* 超出一行显示省略号 */
+.content_text--nowrap {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+/* 超出两行显示省略号 */
+.content_text--twoline {
+    text-overflow: ellipsis;
+    overflow: hidden;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+}
