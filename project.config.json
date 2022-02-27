@@ -25,7 +25,7 @@
         "checkInvalidKey": true,
         "checkSiteMap": false,
         "uploadWithSourceMap": true,
-        "compileHotReLoad": true,
+        "compileHotReLoad": false,
         "lazyloadPlaceholderEnable": false,
         "useMultiFrameRuntime": true,
         "useApiHook": true,
@@ -35,7 +35,7 @@
             "disablePlugins": [],
             "outputPath": ""
         },
-        "useIsolateContext": true,
+        "useIsolateContext": false,
         "userConfirmedBundleSwitch": false,
         "packNpmManually": true,
         "packNpmRelationList": [
@@ -53,8 +53,8 @@
     },
     "compileType": "miniprogram",
     "libVersion": "2.19.4",
-    "appid": "wxaff8c94561a96f56",
-    "projectname": "time",
+    "appid": "wxaa656a2b0649c002",
+    "projectname": "miniTimes",
     "debugOptions": {
         "hidedInDevtools": []
     },

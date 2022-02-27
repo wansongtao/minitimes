@@ -1,4 +1,60 @@
 <!--index.wxml-->
 <view class="container">
-
+  <view class="header">
+    <view class="index_header_date" bindtap="handlerOpenDialog">
+      <view class="header_date_week">{{week}}</view>
+      <view class="header_date_main">{{date}}</view>
+    </view>
+    <view class="index_header_main">
+      <view class="header_main_total">
+        <view class="main_total_text">今日计划</view>
+        <view class="main_total_num">{{plan.total}}</view>
+      </view>
+      <view class="header_plan">
+        <view class="header_plan_item">
+          <view class="plan_item_tit">总数</view>
+          <view class="plan_item_num">{{plan.total}}</view>
+        </view>
+        <view class="header_plan_item">
+          <view class="plan_item_tit">已完成</view>
+          <view class="plan_item_num">{{plan.done}}</view>
+        </view>
+        <view class="header_plan_item">
+          <view class="plan_item_tit">待完成</view>
+          <view class="plan_item_num">{{plan.continued}}</view>
+        </view>
+      </view>
+    </view>
+  </view>
+  <view class="index_main_btn" bindtap="handlerCreate">
+    <van-icon name="plus" size="60rpx" color="#999" />
+  </view>
+  <view class="index_plans">
+    <view class="index_plans_empty" wx:if="{{list.length === 0}}">
+      <image src="../../assets/images/notebg.png" mode="widthFix"></image>
+      <view class="plans_empty_text">快去添加今日计划吧~</view>
+    </view>
+    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bindscrolltolower="{{handlerLoad}}" wx:else>
+      <van-swipe-cell right-width="{{50}}" wx:for="{{list}}" wx:key="index">
+        <van-cell-group>
+          <view class="plan_card">
+            <view class="plan_card_head">
+              <view class="card_head_tit">{{item.title}}</view>
+              <view class="card_head_btn" data-id="{{item.id}}" bindtap="handlerClose">完成</view>
+            </view>
+            <view class="plan_card_content" wx:if="{{item.content}}">
+              {{item.content}}
+            </view>
+            <view class="plan_card_tips">
+              {{item.timeRange[0]}} - {{item.timeRange[1]}}
+            </view>
+          </view>
+        </van-cell-group>
+        <view slot="right" class="plan_card_del" data-id="{{item.id}}" bindtap="handlerDel">
+          删除
+        </view>
+      </van-swipe-cell>
+    </scroll-view>
+  </view>
+  <van-calendar type="single" poppable show-subtitle="{{false}}" show="{{ show }}" min-date="{{ minDate }}" max-date="{{ maxDate }}" bind:close="handlerCloneDialog" bind:confirm="handlerChangeDate" />
 </view>

@@ -1,33 +1,106 @@
 // index.js
+import dayjs from 'dayjs'
+import { weeks } from '../../config/index'
+
 // 获取应用实例
 const app = getApp()
 
 Page({
   data: {
-
+    show: false,
+    minDate: new Date(dayjs().format('YYYY/MM/DD')).getTime() - 99 * 24 * 60 * 60 * 1000,
+    maxDate: new Date(dayjs().format('YYYY/MM/DD')).getTime(),
+    week: weeks[dayjs().day()],
+    date: dayjs().format('YYYY/MM/DD'),
+    plan: {
+      total: 10,
+      done: 5,
+      continued: 5
+    },
+    list: [
+      {
+        id: 1,
+        title: '不过是大梦一场空',
+        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
+        date: '2022-02-27',
+        timeRange: ['17:00:00', '18:00:00'],
+        state: 0, // 0 待完成  1已完成  2已逾期
+        isDelete: 0,
+        createTime: '',
+        updateTime: '',
+        deleteTime: ''
+      },
+      {
+        id: 2,
+        title: '不过是大梦一场空',
+        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
+        date: '2022-02-27',
+        timeRange: ['17:00:00', '18:00:00'],
+        state: 0, // 0 待完成  1已完成  2已逾期
+        isDelete: 0,
+        createTime: '',
+        updateTime: '',
+        deleteTime: ''
+      },
+      {
+        id: 3,
+        title: '不过是大梦一场空',
+        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
+        date: '2022-02-27',
+        timeRange: ['17:00:00', '18:00:00'],
+        state: 0, // 0 待完成  1已完成  2已逾期
+        isDelete: 0,
+        createTime: '',
+        updateTime: '',
+        deleteTime: ''
+      }
+    ]
   },
   onLoad() {
 
   },
-  getUserProfile(e) {
-    // 推荐使用wx.getUserProfile获取用户信息，开发者每次通过该接口获取用户个人信息均需用户确认，开发者妥善保管用户快速填写的头像昵称，避免重复弹窗
-    wx.getUserProfile({
-      desc: '展示用户信息', // 声明获取用户个人信息后的用途，后续会展示在弹窗中，请谨慎填写
-      success: (res) => {
-        console.log(res)
-        this.setData({
-          userInfo: res.userInfo,
-          hasUserInfo: true
-        })
+  handlerOpenDialog() {
+    this.setData({
+      show: true
+    })
+  },
+  handlerCreate() {
+    wx.navigateTo({
+      url: '../addPlan/addPlan',
+    })
+  },
+  handlerLoad() {
+    console.log(2222222222);
+  },
+  handlerDel(e) {
+    console.log(e.target.dataset.id);
+    wx.showModal({
+      title: '提示',
+      content: '确定永久删除该计划吗？',
+      confirmColor: '#f10a24',
+      cancelColor: '#333',
+      success (res) {
+        if (res.confirm) {
+          console.log('用户点击确定')
+        } else if (res.cancel) {
+          console.log('用户点击取消')
+        }
       }
     })
   },
-  getUserInfo(e) {
-    // 不推荐使用getUserInfo获取用户信息，预计自2021年4月13日起，getUserInfo将不再弹出弹窗，并直接返回匿名的用户个人信息
-    console.log(e)
+  handlerClose(e) {
+    console.log(e.target.dataset.id);
+  },
+  handlerCloneDialog() {
+    this.setData({ show: false });
+  },
+  handlerChangeDate(e) {
+    const date = e.detail
+
     this.setData({
-      userInfo: e.detail.userInfo,
-      hasUserInfo: true
+      show: false,
+      week: weeks[dayjs(date).day()],
+      date: dayjs(date).format('YYYY/MM/DD')
     })
   }
 })

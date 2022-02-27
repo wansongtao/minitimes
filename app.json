@@ -2,12 +2,13 @@
     "entryPagePath": "pages/index/index",
     "pages": [
         "pages/index/index",
-        "pages/note/note"
+        "pages/note/note",
+        "pages/addPlan/addPlan"
     ],
     "window": {
         "backgroundTextStyle": "light",
         "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "Weixin",
+        "navigationBarTitleText": "时间",
         "navigationBarTextStyle": "black"
     },
     "tabBar": {
@@ -19,7 +20,7 @@
                 "pagePath": "pages/index/index",
                 "iconPath": "./assets/icons/time.png",
                 "selectedIconPath": "./assets/icons/time_active.png",
-                "text": "今日计划"
+                "text": "每日计划"
             },
             {
                 "pagePath": "pages/note/note",
