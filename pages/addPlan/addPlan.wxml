@@ -1,2 +1,4 @@
 <!--pages/addPlan/addPlan.wxml-->
-<text>pages/addPlan/addPlan.wxml</text>
+<form class="plan_container">
+  <view class="plan_item"></view>
+</form>
