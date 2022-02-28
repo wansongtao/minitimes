@@ -1,4 +1,6 @@
 // pages/addPlan/addPlan.js
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast';
+
 Page({
 
     /**
@@ -20,6 +22,7 @@ Page({
         })
     },
     onVoice() {
-        
+        // 显示开发中弹窗
+        Toast('')
     }
 })

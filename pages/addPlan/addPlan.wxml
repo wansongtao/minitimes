@@ -9,3 +9,9 @@
     </view>
   </view>
 </form>
+
+<!-- 开发中弹窗 -->
+<van-toast id="van-toast">
+  <image src="/assets/icons/under_dev.png" style="width: 128rpx;" mode="widthFix"></image>
+  <text>拼命开发中~</text>
+</van-toast>
