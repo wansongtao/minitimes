@@ -1,1 +1,23 @@
 /* pages/addPlan/addPlan.wxss */
+page {
+  box-sizing: border-box;
+  padding: 40rpx 20rpx;
+  background-color: #f7f8fa;
+}
+
+.plan_item {
+  display: flex;
+  margin-bottom: 40rpx;
+  background-color: #fff;
+}
+
+.plan_item_btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 80rpx;
+}
+
+.item_btn_icon {
+  width: 60rpx;
+}

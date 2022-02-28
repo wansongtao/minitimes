@@ -1,3 +1,6 @@
 {
-  "usingComponents": {}
+  "navigationBarTitleText": "创建计划",
+  "usingComponents": {
+    "van-field": "@vant/weapp/field/index"
+  }
 }
