@@ -1,4 +1,11 @@
 <!--pages/addPlan/addPlan.wxml-->
 <form class="plan_container">
-  <view class="plan_item"></view>
+  <view class="plan_item">
+    <van-cell-group>
+      <van-field name="name" label="名称" title-width="80rpx" required value="{{ name }}" placeholder="请输入计划名称" border="{{ false }}" custom-style="width: calc(100vw - 120rpx);" confirm-type="完成" maxlength="{{12}}" clearable bind:change="onChangeName" />
+    </van-cell-group>
+    <view class="plan_item_btn" bindtap="onVoice">
+      <image src="/assets/icons/microphone.png" class="item_btn_icon" mode="widthFix"></image>
+    </view>
+  </view>
 </form>
