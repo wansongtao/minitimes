@@ -1,15 +1,47 @@
 <!--pages/addPlan/addPlan.wxml-->
+<image src="/assets/images/jobplan.png" mode="widthFix" style="display: block; margin: 0 auto;width: 80vw;"></image>
 <form class="plan_container">
   <view class="plan_item">
     <van-cell-group>
-      <van-field name="name" label="名称" title-width="80rpx" required value="{{ name }}" placeholder="请输入计划名称" border="{{ false }}" custom-style="width: calc(100vw - 120rpx);" confirm-type="完成" maxlength="{{12}}" clearable bind:change="onChangeName" />
+      <van-field name="name" data-name="name" label="名称" title-width="80rpx" required value="{{ name }}" placeholder="请输入名称" custom-style="width: calc(100vw - 120rpx);" confirm-type="完成" maxlength="{{12}}" clearable bind:change="onChangeValue" />
     </van-cell-group>
     <view class="plan_item_btn" bindtap="onVoice">
       <image src="/assets/icons/microphone.png" class="item_btn_icon" mode="widthFix"></image>
     </view>
   </view>
+  <view class="plan_item">
+    <van-cell-group>
+      <van-field name="description" data-name="description" label="描述" title-width="80rpx" type="textarea" autosize value="{{ description }}" placeholder="请输入详细描述" custom-style="width: calc(100vw - 120rpx);" confirm-type="完成" maxlength="{{200}}" show-word-limit clearable bind:change="onChangeValue" />
+    </van-cell-group>
+    <view class="plan_item_btn" bindtap="onVoice">
+      <image src="/assets/icons/microphone.png" class="item_btn_icon" mode="widthFix"></image>
+    </view>
+  </view>
+  <view class="plan_item">
+    <van-cell-group style="width: 100%;">
+      <van-cell title="日期" value="{{ date }}" is-link bind:click="onDisplayDateDia" />
+    </van-cell-group>
+  </view>
+  <view class="plan_item">
+    <van-cell-group style="width: 100%;">
+      <van-cell title="开始时间" data-type="0" value="{{ startTime }}" is-link bind:click="onShowTimeDia" />
+    </van-cell-group>
+  </view>
+  <view class="plan_item">
+    <van-cell-group style="width: 100%;">
+      <van-cell title="结束时间" data-type="1" value="{{ endTime }}" is-link bind:click="onShowTimeDia" />
+    </van-cell-group>
+  </view>
+  <van-button type="primary" plain block bind:click="onSubmit">添加计划</van-button>
 </form>
-
+<!-- 日历 -->
+<van-calendar show="{{ showDateDia }}" bind:close="onCloseDateDia" bind:confirm="onConfirmDate" />
+<!-- 时间选择 -->
+<van-action-sheet show="{{ showTimeDia }}" title="">
+  <view>
+    <van-datetime-picker type="time" value="{{ currentTime }}" min-hour="{{ 0 }}" max-hour="{{ 23 }}" bind:confirm="onSelectTimes" bind:cancel="onCloseTimeDia" />
+  </view>
+</van-action-sheet>
 <!-- 开发中弹窗 -->
 <van-toast id="van-toast">
   <image src="/assets/icons/under_dev.png" style="width: 128rpx;" mode="widthFix"></image>

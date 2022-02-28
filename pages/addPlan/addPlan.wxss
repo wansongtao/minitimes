@@ -7,7 +7,7 @@ page {
 
 .plan_item {
   display: flex;
-  margin-bottom: 40rpx;
+  margin-bottom: 20rpx;
   background-color: #fff;
 }
 
