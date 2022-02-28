@@ -40,7 +40,7 @@
           <view class="plan_card">
             <view class="plan_card_head">
               <view class="card_head_tit">{{item.title}}</view>
-              <view class="card_head_btn" data-id="{{item.id}}" bindtap="handlerClose">完成</view>
+              <view class="card_head_btn" data-id="{{item.id}}" bindtap="handlerFinish">完成</view>
             </view>
             <view class="plan_card_content" wx:if="{{item.content}}">
               {{item.content}}

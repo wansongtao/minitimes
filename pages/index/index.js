@@ -88,7 +88,7 @@ Page({
       }
     })
   },
-  handlerClose(e) {
+  handlerFinish(e) {
     console.log(e.target.dataset.id);
   },
   handlerCloneDialog() {
