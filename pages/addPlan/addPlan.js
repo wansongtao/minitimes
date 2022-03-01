@@ -7,15 +7,10 @@ import {
 import {
     readFile,
     writeFile,
-    setFileName,
-    dataFormatConversion
+    setFileName
 } from '../../utils/util'
 
 Page({
-
-    /**
-     * 页面的初始数据
-     */
     data: {
         name: '',
         description: '',
@@ -32,12 +27,6 @@ Page({
      */
     onLoad: function (options) {
         this.setDefaultTime()
-
-        const text = readFile(setFileName())
-        // console.log(text);
-
-        const arr = dataFormatConversion(text, separator)
-        console.log(arr);
     },
     setDefaultTime() {
         const hour = dayjs().hour()
