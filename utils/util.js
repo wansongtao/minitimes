@@ -68,24 +68,6 @@ export const updateMiniprogram = () => {
 };
 
 /**
- * @description 登录
- * @returns {Promise} 成功resolve(code)，失败reject(errmsg)
- */
-export const login = () => {
-  return new Promise((resolve, reject) => {
-    wx.login({
-      success(res) {
-        if (!res.code) {
-          reject(res.errMsg)
-        }
-
-        resolve(res.code);
-      }
-    });
-  });
-};
-
-/**
  * @description 创建本地文件
  * @param {string} data 要写入文件的内容
  * @param {string} name 文件名，带上后缀
