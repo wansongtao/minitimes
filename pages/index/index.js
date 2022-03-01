@@ -1,6 +1,8 @@
 // index.js
 import dayjs from 'dayjs'
 import { weeks } from '../../config/index'
+import { separator } from '../../config/index'
+import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 
 // 获取应用实例
 const app = getApp()
@@ -14,50 +16,98 @@ Page({
     date: dayjs().format('YYYY/MM/DD'),
     plan: {
       total: 10,
-      done: 5,
-      continued: 5
+      done: 5, // 已完成数量
+      continued: 5 // 待完成数量
     },
-    list: [
-      {
-        id: 1,
-        title: '不过是大梦一场空',
-        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
-        date: '2022-02-27',
-        timeRange: ['17:00:00', '18:00:00'],
-        state: 0, // 0 待完成  1已完成  2已逾期
-        isDelete: 0,
-        createTime: '',
-        updateTime: '',
-        deleteTime: ''
-      },
-      {
-        id: 2,
-        title: '不过是大梦一场空',
-        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
-        date: '2022-02-27',
-        timeRange: ['17:00:00', '18:00:00'],
-        state: 0, // 0 待完成  1已完成  2已逾期
-        isDelete: 0,
-        createTime: '',
-        updateTime: '',
-        deleteTime: ''
-      },
-      {
-        id: 3,
-        title: '不过是大梦一场空',
-        content: '人生本就是一场无尽的幻想，所谓，花非花，雾非雾。',
-        date: '2022-02-27',
-        timeRange: ['17:00:00', '18:00:00'],
-        state: 0, // 0 待完成  1已完成  2已逾期
-        isDelete: 0,
-        createTime: '',
-        updateTime: '',
-        deleteTime: ''
-      }
-    ]
+    list: [],
+    currPage: 1, // 页码
+    pageSize: 6 // 每页条数
+  },
+  global: {
+    load: 0,
+    plans: []
   },
   onLoad() {
+    this.global.load = 1
+    this.initData()
+  },
+  onShow() {
+    if (this.global.plans.length < this.data.pageSize &&  this.global.load) {
+      this.initData()
+    }
+  },
+  /**
+   * @description 获取本地文件中的计划，当前年月
+   */
+  getFilePlanData() {
+    const fileName = setFileName()
+    const text = readFile(fileName)
 
+    if (text === false) {
+      return []
+    }
+
+    const list = dataFormatConversion(text, separator)
+
+    return list.filter((item) => !item.isDelete)
+  },
+  /**
+   * @description 设置不同状态计划数量
+   */
+  setPlanNumber() {
+    const list = this.global.plans
+
+    const plan = {
+      total: list.length,
+      done: 0,
+      continued: 0
+    }
+
+    list.forEach((item) => {
+      if (item.state === 0) {
+        plan.continued += 1
+      }
+
+      if (item.state === 1) {
+        plan.done += 1
+      }
+    })
+
+    this.setData({
+      plan
+    })
+  },
+  /**
+   * @description 分页加载数据
+   */
+  loadPlans() {
+    const plans = this.global.plans
+    const data = this.data
+
+    const start = (data.currPage - 1) * data.pageSize
+
+    if (start >= plans.length) {
+      return
+    }
+
+    const end = data.currPage * data.pageSize
+    const newList = [...data.list, ...plans.slice(start, end)]
+    this.setData({
+      list: newList,
+      currPage: data.currPage + 1
+    })
+  },
+  initData() {
+    const list = this.getFilePlanData()
+    this.global.plans = list
+
+    this.setPlanNumber()
+
+    const showList = this.global.plans.slice(0, this.data.pageSize)
+    this.setData({
+      list: showList,
+      currPage: 2
+    })
   },
   handlerOpenDialog() {
     this.setData({
@@ -70,7 +120,11 @@ Page({
     })
   },
   handlerLoad() {
-    console.log(2222222222);
+    if (this.data.list.length >= this.data.plan.total) {
+      return
+    }
+
+    this.loadPlans()
   },
   handlerDel(e) {
     console.log(e.target.dataset.id);
@@ -89,7 +143,18 @@ Page({
     })
   },
   handlerFinish(e) {
-    console.log(e.target.dataset.id);
+    const id = e.target.dataset.id
+    const data = this.data.list
+
+    data.forEach((item) => {
+      if (item.id === id) {
+        item.state = 1
+      }
+    })
+
+    this.setData({
+      list: data
+    })
   },
   handlerCloneDialog() {
     this.setData({ show: false });

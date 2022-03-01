@@ -149,7 +149,7 @@ Page({
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {
-            this.initData()
+            // this.initData()
 
             wx.showToast({
                 title: '添加成功',

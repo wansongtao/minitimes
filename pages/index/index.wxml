@@ -1,5 +1,6 @@
 <!--index.wxml-->
-<view class="container">
+<view class="container index_mg">
+  <image src="/assets/images/head_bg.jpg" class="head_bg"></image>
   <view class="header">
     <view class="index_header_date" bindtap="handlerOpenDialog">
       <view class="header_date_week">{{week}}</view>
@@ -34,19 +35,20 @@
       <image src="../../assets/images/notebg.png" mode="widthFix"></image>
       <view class="plans_empty_text">快去添加今日计划吧~</view>
     </view>
-    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bindscrolltolower="{{handlerLoad}}" wx:else>
+    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bind:scrolltolower="handlerLoad" wx:else>
       <van-swipe-cell right-width="{{50}}" wx:for="{{list}}" wx:key="index">
         <van-cell-group>
           <view class="plan_card">
             <view class="plan_card_head">
-              <view class="card_head_tit">{{item.title}}</view>
-              <view class="card_head_btn" data-id="{{item.id}}" bindtap="handlerFinish">完成</view>
+              <view class="card_head_tit">{{item.name}}</view>
+              <view class="card_head_btn" data-id="{{item.id}}" bindtap="handlerFinish" wx:if="{{item.state === 0}}">完成</view>
+              <view class="card_state" data-id="{{item.id}}" wx:if="{{item.state === 1}}">已完成</view>
             </view>
-            <view class="plan_card_content" wx:if="{{item.content}}">
-              {{item.content}}
+            <view class="plan_card_content" wx:if="{{item.description}}">
+              {{item.description}}
             </view>
             <view class="plan_card_tips">
-              {{item.timeRange[0]}} - {{item.timeRange[1]}}
+              {{item.startTime}} - {{item.endTime}}
             </view>
           </view>
         </van-cell-group>

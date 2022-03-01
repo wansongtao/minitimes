@@ -3,7 +3,9 @@
  * @date 2022-02-27
  * @description 通用方法库
  */
-import { filePrev } from '../config/index'
+import {
+  filePrev
+} from '../config/index'
 
 /**
  * @description 获取参数数据类型
@@ -120,12 +122,12 @@ export const createLocalFile = (data, name) => {
 /**
  * @description 读取文件内容
  * @param {string} fileName 文件名，带上后缀
- * @returns {string} 返回文件内容
+ * @returns {string|false} 成功返回文件内容，失败返回false
  */
 export const readFile = (fileName) => {
   if (typeof fileName !== 'string' || !fileName) {
     console.error('argument error.');
-    return ''
+    return false
   }
 
   const fs = wx.getFileSystemManager()
@@ -135,7 +137,7 @@ export const readFile = (fileName) => {
     return res
   } catch (e) {
     console.error(e)
-    return ''
+    return false
   }
 }
 
@@ -202,8 +204,8 @@ export const writeFile = (fileName, data, position) => {
 }
 
 /**
- * @description 设置文件名
- * @param {string} val 年月，格式：yyyymm
+ * @description 设置文件名，默认当前年月
+ * @param {string} [val] 年月，格式：yyyymm
  * @returns {string} 返回文件名，命名规则：yyyymm_202201.txt
  */
 export const setFileName = (val) => {
@@ -215,7 +217,7 @@ export const setFileName = (val) => {
   const year = date.getFullYear()
   const month = date.getMonth() + 1
 
-  return `${filePrev}${year}${month.toString().padStart(2)}.txt`
+  return `${filePrev}${year}${month.toString().padStart(2, '0')}.txt`
 }
 
 /**
@@ -235,6 +237,11 @@ export const dataFormatConversion = (text, separator) => {
     return []
   }
 
+  if (text.indexOf(separator) === -1) {
+    console.error('separator error.');
+    return []
+  }
+
   let list = text.split(separator)
 
   if (!list.length) {
@@ -246,4 +253,27 @@ export const dataFormatConversion = (text, separator) => {
 
   list = JSON.parse(str)
   return list
+}
+
+/**
+ * @description 删除本地文件
+ * @param {string} fileName 文件名
+ * @returns {Boolean} 成功true，失败false
+ */
+export const removeFile = (fileName) => {
+  if (typeof fileName !== 'string' || !fileName) {
+    console.error('argument error.');
+    return false
+  }
+
+  const fs = wx.getFileSystemManager()
+
+  try {
+    fs.unlinkSync(`${wx.env.USER_DATA_PATH}/${fileName}`)
+
+    return true
+  } catch(e) {
+    console.error(e)
+    return false
+  }
 }
