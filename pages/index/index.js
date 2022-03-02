@@ -2,10 +2,11 @@
 import dayjs from 'dayjs'
 import { weeks } from '../../config/index'
 import { separator } from '../../config/index'
-import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
+import { setFileName, readFile, dataFormatConversion, removeFile, createLocalFile } from '../../utils/util'
+import useUpdateFile from '../../utils/useUpdateFile'
 
 // 获取应用实例
-const app = getApp()
+// const app = getApp()
 
 Page({
   data: {
@@ -24,23 +25,33 @@ Page({
     pageSize: 6 // 每页条数
   },
   global: {
-    load: 0,
+    load: 0, // 0 第一次打开
     plans: []
   },
   onLoad() {
-    this.global.load = 1
     this.initData()
+
+    setTimeout(() => {
+      this.global.load = 1
+    }, 100);
   },
   onShow() {
+    // 从其他页面返回改页面时且显示的数据小于设定的条数时，重新初始化
     if (this.global.plans.length < this.data.pageSize &&  this.global.load) {
       this.initData()
     }
   },
   /**
-   * @description 获取本地文件中的计划，当前年月
+   * @description 获取本地文件中的计划
+   * @param {string} [date] 日期字符串，默认当前年月
+   * @returns {Object[]}
    */
-  getFilePlanData() {
-    const fileName = setFileName()
+  getFilePlanData(date) {
+    if (date) {
+      date = dayjs(date).format('YYYYMM')
+    }
+
+    const fileName = setFileName(date)
     const text = readFile(fileName)
 
     if (text === false) {
@@ -146,14 +157,37 @@ Page({
     const id = e.target.dataset.id
     const data = this.data.list
 
-    data.forEach((item) => {
-      if (item.id === id) {
-        item.state = 1
-      }
-    })
+    const idx = data.findIndex((item) => item.id === id)
+    if (idx === -1) {
+      wx.showToast({
+        title: '操作失败',
+        icon: 'error'
+      })
+      return
+    }
+
+    const oldVal = JSON.parse(JSON.stringify(data[idx]))
+
+    data[idx].state = 1
+    data[idx].updateTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+    const newVal = data[idx]
+
+    const isSuccess = useUpdateFile(oldVal, newVal)
+    if (!isSuccess) {
+      wx.showToast({
+        title: '操作失败',
+        icon: 'error'
+      })
+      return
+    }
 
     this.setData({
       list: data
+    })
+
+    wx.showToast({
+      title: '操作成功',
+      icon: 'success'
     })
   },
   handlerCloneDialog() {
