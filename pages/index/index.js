@@ -51,6 +51,31 @@ Page({
     }
   },
   /**
+   * @description 计划列表数据排序，状态升序+时间升序
+   * @param {Object[]} data 待排序数据
+   * @returns {Object[]} 排好序的数据
+   */
+  planDataSort(data) {
+    if (data.length === 0) {
+      return data
+    }
+
+    data.sort((a, b) => {
+      if (a.startTime < b.startTime) {
+        return -1;
+      }
+      if (a.startTime > b.startTime) {
+        return 1;
+      }
+    
+      return 0;
+    })
+
+    data.sort((a, b) => a.state - b.state)
+
+    return data
+  },
+  /**
    * @description 获取本地文件中的计划
    * @param {string} [date] 日期字符串，默认当前年月
    * @returns {Object[]}
@@ -69,7 +94,7 @@ Page({
 
     const list = dataFormatConversion(text, separator)
 
-    return list.filter((item) => !item.isDelete)
+    return this.planDataSort(list.filter((item) => !item.isDelete))
   },
   /**
    * @description 设置不同状态计划数量
