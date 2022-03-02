@@ -154,7 +154,7 @@ Page({
             deleteTime: ''
         }
 
-        const fileName = setFileName()
+        const fileName = setFileName(dayjs(data.date).format('YYYYMM'))
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {
