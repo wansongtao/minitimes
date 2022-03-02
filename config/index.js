@@ -16,5 +16,5 @@ export const filePrev = 'yyyymm_'
 /**
  * @description 数据分割符
  */
-export const separator = '/~SPLIT-😊-LINE~/'
+export const separator = '#&#'
 
