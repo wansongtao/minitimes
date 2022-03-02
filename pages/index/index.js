@@ -166,6 +166,25 @@ Page({
       return
     }
 
+    const nowDate = dayjs().format('YYYY/MM/DD')
+    if (nowDate < data[idx].date) {
+      wx.showToast({
+        title: '时间未到',
+        icon: 'error'
+      })
+      return
+    }
+
+    const nowTime = dayjs().format('HH:mm')
+
+    if (nowTime < data[idx].endTime) {
+      wx.showToast({
+        title: '时间未到',
+        icon: 'error'
+      })
+      return
+    }
+
     const oldVal = JSON.parse(JSON.stringify(data[idx]))
 
     data[idx].state = 1
