@@ -141,14 +141,14 @@ Page({
         const inputData = this.data
 
         const data = {
-            id: new Date().getTime(),
+            id: new Date().getTime(), // 根据当前时间生成唯一id
             name: inputData.name.replace(separator, ''),
             description: inputData.description.replace(separator, ''),
-            date: inputData.date,
-            startTime: inputData.startTime,
-            endTime: inputData.endTime,
-            state: 0,
-            isDelete: 0,
+            date: inputData.date, // 计划日期
+            startTime: inputData.startTime, // 计划开始时间
+            endTime: inputData.endTime, // 计划结束时间
+            state: 0, // 0 待完成  1 已完成  2已逾期
+            isDelete: 0, // 0 正常  1 已删除
             createTime: dayjs().format('YYYY/MM/DD HH:mm:ss'),
             updateTime: '',
             deleteTime: ''
