@@ -5,7 +5,6 @@ import {
     separator
 } from '../../config/index'
 import {
-    readFile,
     writeFile,
     setFileName
 } from '../../utils/util'
@@ -52,8 +51,18 @@ Page({
      * @param {*} e 
      */
     onChangeValue(e) {
+        let val = e.detail
+
+        if (val.indexOf(separator) !== -1) {
+            wx.showToast({
+                title: `非法字符${separator}`,
+                icon: 'error'
+            })
+            val = val.replace(separator, '')
+        }
+
         this.setData({
-            [e.target.dataset.name]: e.detail
+            [e.target.dataset.name]: val
         })
     },
     onVoice() {
@@ -133,8 +142,8 @@ Page({
 
         const data = {
             id: new Date().getTime(),
-            name: inputData.name,
-            description: inputData.description,
+            name: inputData.name.replace(separator, ''),
+            description: inputData.description.replace(separator, ''),
             date: inputData.date,
             startTime: inputData.startTime,
             endTime: inputData.endTime,
@@ -149,7 +158,7 @@ Page({
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {
-            // this.initData()
+            this.initData()
 
             wx.showToast({
                 title: '添加成功',
