@@ -1,11 +1,15 @@
 // app.js
-import { updateMiniprogram } from './utils/util';
+import {
+  updateMiniprogram
+} from './utils/util'
 
 App({
   onLaunch() {
     updateMiniprogram()
+
   },
   globalData: {
-    userInfo: null
+    updateFile: null, // 修改的文件
+    updateData: null // 需要修改的数据
   }
 })
