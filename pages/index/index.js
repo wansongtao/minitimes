@@ -1,8 +1,17 @@
 // index.js
 import dayjs from 'dayjs'
-import { weeks } from '../../config/index'
-import { separator, planPrev } from '../../config/index'
-import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
+import {
+  weeks
+} from '../../config/index'
+import {
+  separator,
+  planPrev
+} from '../../config/index'
+import {
+  setFileName,
+  readFile,
+  dataFormatConversion
+} from '../../utils/util'
 import useUpdateFile from '../../utils/useUpdateFile'
 
 // 获取应用实例
@@ -37,7 +46,7 @@ Page({
   },
   onShow() {
     // 从其他页面返回改页面时且显示的数据小于设定的条数时，重新初始化
-    if (this.global.plans.length < this.data.pageSize &&  this.global.load) {
+    if (this.global.plans.length < this.data.pageSize && this.global.load) {
       this.initData()
     }
   },
@@ -138,17 +147,51 @@ Page({
     this.loadPlans()
   },
   handlerDel(e) {
-    console.log(e.target.dataset.id);
+    const that = this
+
     wx.showModal({
       title: '提示',
       content: '确定永久删除该计划吗？',
       confirmColor: '#f10a24',
       cancelColor: '#333',
-      success (res) {
+      success(res) {
         if (res.confirm) {
-          console.log('用户点击确定')
-        } else if (res.cancel) {
-          console.log('用户点击取消')
+          const id = e.target.dataset.id
+          const data = that.data.list
+
+          const idx = data.findIndex((item) => item.id === id)
+          if (idx === -1) {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'error'
+            })
+            return
+          }
+
+          const oldVal = JSON.parse(JSON.stringify(data[idx]))
+
+          data[idx].isDelete = 1
+          data[idx].deleteTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+          const newVal = data[idx]
+
+          const isSuccess = useUpdateFile(oldVal, newVal)
+          if (!isSuccess) {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'error'
+            })
+            return
+          }
+
+          data.splice(idx, 1)
+          that.setData({
+            list: data
+          })
+
+          wx.showToast({
+            title: '删除成功',
+            icon: 'success'
+          })
         }
       }
     })
@@ -210,7 +253,9 @@ Page({
     })
   },
   handlerCloneDialog() {
-    this.setData({ show: false });
+    this.setData({
+      show: false
+    });
   },
   handlerChangeDate(e) {
     const date = e.detail
