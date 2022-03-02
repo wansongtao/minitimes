@@ -9,6 +9,7 @@
     ]
   },
   "setting": {
+    "lazyCodeLoading": "requiredComponents",
     "urlCheck": true,
     "es6": true,
     "enhance": true,
