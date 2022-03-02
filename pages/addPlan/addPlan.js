@@ -2,7 +2,8 @@
 import dayjs from 'dayjs'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
 import {
-    separator
+    separator,
+    planPrev
 } from '../../config/index'
 import {
     writeFile,
@@ -155,7 +156,7 @@ Page({
             deleteTime: ''
         }
 
-        const isVerify = verifyDataFormat(data)
+        const isVerify = verifyDataFormat(data, separator)
         if (!isVerify) {
             wx.showToast({
                 title: '添加失败',
@@ -164,7 +165,7 @@ Page({
             return
         }
 
-        const fileName = setFileName(dayjs(data.date).format('YYYYMM'))
+        const fileName = setFileName(planPrev, dayjs(data.date).format('YYYYMM'))
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {

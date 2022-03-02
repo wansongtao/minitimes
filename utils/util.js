@@ -3,10 +3,6 @@
  * @date 2022-02-27
  * @description 通用方法库
  */
-import {
-  filePrev,
-  separator
-} from '../config/index'
 
 /**
  * @description 获取参数数据类型
@@ -33,9 +29,15 @@ export const getDataType = (obj) => {
  * @param {string} data.createTime 创建时间
  * @param {string} [data.updateTime] 修改时间
  * @param {string} [data.deleteTime] 删除时间
+ * @param {string} separator
  * @returns {Boolean}
  */
-export const verifyDataFormat = (data) => {
+export const verifyDataFormat = (data, separator) => {
+  if (typeof separator !== 'string') {
+    console.error('argument type error.');
+    return false
+  }
+
   if (getDataType(data) !== 'object') {
     console.error('argument type error.');
     return false
@@ -266,20 +268,26 @@ export const writeFile = (fileName, data, position) => {
 }
 
 /**
- * @description 设置文件名，默认当前年月
+ * @description 设置文件名
+ * @param {string} prev 前缀
  * @param {string} [val] 年月，格式：yyyymm
- * @returns {string} 返回文件名，命名规则：yyyymm_202201.txt
+ * @returns {string} 返回文件名，命名规则：prev + yyyymm.txt
  */
-export const setFileName = (val) => {
+export const setFileName = (prev, val) => {
+  if (typeof prev !== 'string') {
+    console.error('argument error.');
+    return ''
+  }
+
   if (val) {
-    return `/${filePrev}${val}.txt`
+    return `${prev}${val}.txt`
   }
 
   const date = new Date()
   const year = date.getFullYear()
   const month = date.getMonth() + 1
 
-  return `/${filePrev}${year}${month.toString().padStart(2, '0')}.txt`
+  return `${prev}${year}${month.toString().padStart(2, '0')}.txt`
 }
 
 /**

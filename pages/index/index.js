@@ -1,8 +1,8 @@
 // index.js
 import dayjs from 'dayjs'
 import { weeks } from '../../config/index'
-import { separator } from '../../config/index'
-import { setFileName, readFile, dataFormatConversion, removeFile, createLocalFile } from '../../utils/util'
+import { separator, planPrev } from '../../config/index'
+import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 import useUpdateFile from '../../utils/useUpdateFile'
 
 // 获取应用实例
@@ -51,7 +51,7 @@ Page({
       date = dayjs(date).format('YYYYMM')
     }
 
-    const fileName = setFileName(date)
+    const fileName = setFileName(planPrev, date)
     const text = readFile(fileName)
 
     if (text === false) {

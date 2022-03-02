@@ -1,4 +1,5 @@
 import dayjs from 'dayjs'
+import { planPrev, separator } from '../config/index'
 import {
   setFileName,
   readFile,
@@ -14,12 +15,12 @@ import {
  * @returns {Boolean} 成功true，失败false
  */
 const useUpdateFile = (oldVal, newVal) => {
-  if (!verifyDataFormat(oldVal) || !verifyDataFormat(newVal)) {
+  if (!verifyDataFormat(oldVal, separator) || !verifyDataFormat(newVal, separator)) {
     console.error('argument error.');
     return false
   }
 
-  const oldFileName = setFileName(dayjs(oldVal.date).format('YYYYMM'))
+  const oldFileName = setFileName(planPrev, dayjs(oldVal.date).format('YYYYMM'))
 
   const text = readFile(oldFileName)
   if (!text) {
@@ -33,7 +34,7 @@ const useUpdateFile = (oldVal, newVal) => {
     return false
   }
 
-  const newFileName = setFileName(dayjs(newVal.date).format('YYYYMM'))
+  const newFileName = setFileName(planPrev, dayjs(newVal.date).format('YYYYMM'))
   const isSuccess = createLocalFile(newText, newFileName)
   return isSuccess
 }

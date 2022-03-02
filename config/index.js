@@ -9,9 +9,9 @@ export const weeks = [
 ];
 
 /**
- * @description 文件名(创建文件时，文件名为：yyyymm_202202)
+ * @description 文件名前缀
  */
-export const filePrev = 'yyyymm_'
+export const planPrev = 'plans_'
 
 /**
  * @description 数据分割符
