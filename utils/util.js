@@ -210,12 +210,18 @@ export const openFile = (fileName) => {
   }
 
   const fs = wx.getFileSystemManager()
-  const fd = fs.openSync({
-    filePath: `${wx.env.USER_DATA_PATH}/${fileName}`,
-    flag: 'a+'
-  })
 
-  return fd
+  try {
+    const fd = fs.openSync({
+      filePath: `${wx.env.USER_DATA_PATH}/${fileName}`,
+      flag: 'a+'
+    })
+  
+    return fd
+  } catch(e) {
+    console.error(e);
+    return false
+  }
 }
 
 /**
@@ -266,14 +272,14 @@ export const writeFile = (fileName, data, position) => {
  */
 export const setFileName = (val) => {
   if (val) {
-    return `${filePrev}${val}.txt`
+    return `/${filePrev}${val}.txt`
   }
 
   const date = new Date()
   const year = date.getFullYear()
   const month = date.getMonth() + 1
 
-  return `${filePrev}${year}${month.toString().padStart(2, '0')}.txt`
+  return `/${filePrev}${year}${month.toString().padStart(2, '0')}.txt`
 }
 
 /**
