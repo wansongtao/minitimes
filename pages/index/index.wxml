@@ -1,7 +1,11 @@
 <!--index.wxml-->
-<view class="container index_mg">
-  <image src="/assets/images/head_bg.jpg" class="head_bg"></image>
-  <view class="header">
+<view class="container index_mg" style="{{showNotice ? '' : 'padding-top: 260rpx;'}}">
+  <view class="notice" wx:if="{{showNotice}}">
+    <view class="notice_btn" bindtap="onCloneNotice"></view>
+    <van-notice-bar left-icon="volume-o" text="{{notice}}" />
+  </view>
+  <image src="/assets/images/head_bg.jpg" class="header_position head_bg" style="{{showNotice ? '' : 'top: 10rpx;'}}"></image>
+  <view class="header_position header" style="{{showNotice ? '' : 'top: 10rpx;'}}">
     <view class="index_header_date" bindtap="handlerOpenDialog">
       <view class="header_date_week">{{week}}</view>
       <view class="header_date_main">{{date}}</view>

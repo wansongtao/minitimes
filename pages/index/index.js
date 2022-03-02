@@ -1,7 +1,8 @@
 // index.js
 import dayjs from 'dayjs'
 import {
-  weeks
+  weeks,
+  commonNotice
 } from '../../config/index'
 import {
   separator,
@@ -19,6 +20,8 @@ import useUpdateFile from '../../utils/useUpdateFile'
 
 Page({
   data: {
+    showNotice: true,
+    notice: commonNotice,
     show: false,
     minDate: new Date(dayjs().format('YYYY/MM/DD')).getTime() - 99 * 24 * 60 * 60 * 1000,
     maxDate: new Date(dayjs().format('YYYY/MM/DD')).getTime(),
@@ -289,6 +292,11 @@ Page({
       show: false,
       week: weeks[dayjs(date).day()],
       date: dayjs(date).format('YYYY/MM/DD')
+    })
+  },
+  onCloneNotice() {
+    this.setData({
+      showNotice: false
     })
   }
 })
