@@ -169,6 +169,13 @@
 }
 
 .card_state {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 140rpx;
+  height: 40rpx;
   font-size: 24rpx;
-  color: #ee0a24;
+  color: #fff;
+  background-color: #e7cd7e;
+  transform: rotate(45deg) translateY(-50rpx) translateX(30rpx);
 }
