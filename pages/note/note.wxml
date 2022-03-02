@@ -1,2 +1,5 @@
 <!--pages/note/note.wxml-->
-<text>拼命开发中~</text>
+<view class="note">
+  <image src="/assets/images/notebg.png" mode="widthFix"></image>
+  <view>拼命开发中~</view>
+</view>
