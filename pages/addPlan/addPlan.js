@@ -6,7 +6,8 @@ import {
 } from '../../config/index'
 import {
     writeFile,
-    setFileName
+    setFileName,
+    verifyDataFormat
 } from '../../utils/util'
 
 Page({
@@ -154,6 +155,15 @@ Page({
             deleteTime: ''
         }
 
+        const isVerify = verifyDataFormat(data)
+        if (!isVerify) {
+            wx.showToast({
+                title: '添加失败',
+                icon: 'error'
+            })
+            return
+        }
+
         const fileName = setFileName(dayjs(data.date).format('YYYYMM'))
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
@@ -168,7 +178,7 @@ Page({
             wx.showToast({
                 title: '添加失败',
                 icon: 'error'
-            }) 
+            })
         }
     }
 })
