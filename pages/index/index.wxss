@@ -121,7 +121,7 @@
 }
 
 .index_plans_box {
-  height: calc(100vh - 400rpx);
+  height: calc(100vh - 480rpx);
   overflow-anchor: auto;
 }
 

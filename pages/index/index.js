@@ -2,9 +2,7 @@
 import dayjs from 'dayjs'
 import {
   weeks,
-  commonNotice
-} from '../../config/index'
-import {
+  commonNotice,
   separator,
   planPrev
 } from '../../config/index'
@@ -38,7 +36,8 @@ Page({
   },
   global: {
     load: 0, // 0 第一次打开
-    plans: []
+    plans: [], // 今天的计划数据
+    allPlan: {} // 读取过的月份计划数据
   },
   onLoad() {
     this.initData()
@@ -48,7 +47,7 @@ Page({
     }, 100);
   },
   onShow() {
-    // 从其他页面返回改页面时且显示的数据小于设定的条数时，重新初始化
+    // 从其他页面返回该页面时且显示的数据小于设定的条数时，重新初始化
     if (this.global.plans.length < this.data.pageSize && this.global.load) {
       this.initData()
     }
@@ -70,7 +69,7 @@ Page({
       if (a.startTime > b.startTime) {
         return 1;
       }
-    
+
       return 0;
     })
 
@@ -79,9 +78,9 @@ Page({
     return data
   },
   /**
-   * @description 获取本地文件中的计划
+   * @description 获取本地文件中的计划相关数据
    * @param {string} [date] 日期字符串，默认当前年月
-   * @returns {Object[]}
+   * @returns {Object[]} 成功返回数据列表，失败返回空数组
    */
   getFilePlanData(date) {
     if (date) {
@@ -97,14 +96,13 @@ Page({
 
     const list = dataFormatConversion(text, separator)
 
-    return this.planDataSort(list.filter((item) => !item.isDelete))
+    return list.filter((item) => !item.isDelete)
   },
   /**
    * @description 设置不同状态计划数量
+   * @param {object[]} list
    */
-  setPlanNumber() {
-    const list = this.global.plans
-
+  setPlanNumber(list) {
     const plan = {
       total: list.length,
       done: 0,
@@ -146,10 +144,16 @@ Page({
     })
   },
   initData() {
-    const list = this.getFilePlanData()
-    this.global.plans = list
+    const date = dayjs().format('YYYYMM')
+    const list = this.planDataSort(this.getFilePlanData(date))
 
-    this.setPlanNumber()
+    // 保存当前月份的数据
+    this.global.allPlan[date] = list
+
+    // 保存当天的数据
+    this.global.plans = list.filter((item) => item.date === this.data.date)
+
+    this.setPlanNumber(this.global.plans)
 
     const showList = this.global.plans.slice(0, this.data.pageSize)
     this.setData({
@@ -286,13 +290,92 @@ Page({
     });
   },
   handlerChangeDate(e) {
-    const date = e.detail
-
     this.setData({
-      show: false,
-      week: weeks[dayjs(date).day()],
-      date: dayjs(date).format('YYYY/MM/DD')
+      show: false
     })
+
+    // const date = dayjs(e.detail)
+    // const nowDate = date.format('YYYY/MM/DD')
+
+    // // 没有改变日期
+    // if (nowDate === this.data.date) {
+    //   return
+    // }
+
+    // const yearMonth = date.format('YYYYMM')
+    // const allPlan = this.global.allPlan
+
+    // // 今天
+    // if (nowDate === dayjs().format('YYYY/MM/DD')) {
+    //   this.global.plans = allPlan[yearMonth].filter((item) => item.date === nowDate)
+    //   this.setPlanNumber(this.global.plans)
+
+    //   const showList = this.global.plans.slice(0, this.data.pageSize)
+    //   this.setData({
+    //     list: showList,
+    //     currPage: 2,
+    //     week: weeks[date.day()],
+    //     date: nowDate
+    //   })
+    //   return
+    // }
+
+    // // 没有这个月份的数据，需要去文件中读取
+    // if (!allPlan[yearMonth] || !allPlan[yearMonth].length) {
+    //   const list = this.getFilePlanData(yearMonth)
+
+    //   if (!list.length) {
+    //     wx.showToast({
+    //       title: '无当前月份的相关数据',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+
+    //   this.global.allPlan[yearMonth] = this.planDataSort(list)
+
+    //   const nowList = list.filter((item) => item.date === nowDate)
+    //   if (!nowList.length) {
+    //     wx.showToast({
+    //       title: '无当前日的相关数据',
+    //       icon: 'none'
+    //     })
+    //     return
+    //   }
+
+    //   this.global.plans = nowList
+    //   this.setPlanNumber(this.global.plans)
+
+    //   const showList = this.global.plans.slice(0, this.data.pageSize)
+    //   this.setData({
+    //     list: showList,
+    //     currPage: 2,
+    //     week: weeks[date.day()],
+    //     date: nowDate
+    //   })
+    //   return
+    // }
+
+    // const currList = allPlan[yearMonth].filter((item) => item.date === nowDate)
+    // if (!currList.length) {
+    //   wx.showToast({
+    //     title: '无当前日的相关数据',
+    //     icon: 'none'
+    //   })
+    //   return
+    // }
+
+    // this.global.plans = currList
+    // this.setPlanNumber(this.global.plans)
+
+    // const showList = this.global.plans.slice(0, this.data.pageSize)
+    // this.setData({
+    //   list: showList,
+    //   currPage: 2,
+    //   week: weeks[date.day()],
+    //   date: nowDate
+    // })
+    // return
   },
   onCloneNotice() {
     this.setData({

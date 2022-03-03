@@ -39,7 +39,7 @@
       <image src="../../assets/images/notebg.png" mode="widthFix"></image>
       <view class="plans_empty_text">快去添加今日计划吧~</view>
     </view>
-    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bind:scrolltolower="handlerLoad" wx:else>
+    <scroll-view scroll-y="{{true}}" style="{{showNotice ? '' : 'height: calc(100vh - 400rpx);'}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bind:scrolltolower="handlerLoad" wx:else>
       <van-swipe-cell right-width="{{50}}" wx:for="{{list}}" wx:key="index">
         <van-cell-group>
           <view class="plan_card">
