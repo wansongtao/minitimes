@@ -23,7 +23,7 @@ Page({
     notice: commonNotice,
     show: false,
     minDate: new Date(dayjs().format('YYYY/MM/DD')).getTime() - 99 * 24 * 60 * 60 * 1000,
-    maxDate: new Date(dayjs().format('YYYY/MM/DD')).getTime(),
+    maxDate: new Date(dayjs().format('YYYY/MM/DD')).getTime() + 7 * 24 * 60 * 60 * 1000,
     week: weeks[dayjs().day()],
     date: dayjs().format('YYYY/MM/DD'),
     plan: {
