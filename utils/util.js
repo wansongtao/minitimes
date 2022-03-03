@@ -347,3 +347,35 @@ export const removeFile = (fileName) => {
     return false
   }
 }
+
+/**
+ * @description 文件重命名
+ * @param {string} fileName 原文件名
+ * @param {string} newFileName 新文件名
+ * @returns {boolean}
+ */
+export const renameFile = (fileName, newFileName) => {
+  if (typeof fileName !== 'string' || typeof newFileName !== 'string') {
+    console.error('argument type error.');
+    return false
+  }
+
+  if (fileName === '' || newFileName === '') {
+    console.error('argument error.');
+    return false
+  }
+
+  const fs = wx.getFileSystemManager()
+
+  try {
+    fs.renameSync(
+      `${wx.env.USER_DATA_PATH}/${fileName}`,
+      `${wx.env.USER_DATA_PATH}/${newFileName}`
+    )
+
+    return true
+  } catch(e) {
+    console.error(e)
+    return false
+  }
+}
