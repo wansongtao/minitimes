@@ -251,6 +251,15 @@ Page({
             return
           }
 
+          // 不能删除已完成/已逾期的计划
+          if (data[idx].state !== 0) {
+            wx.showToast({
+              title: '删除失败',
+              icon: 'error'
+            })
+            return
+          }
+
           const oldVal = JSON.parse(JSON.stringify(data[idx]))
 
           data[idx].isDelete = 1
