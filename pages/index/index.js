@@ -275,6 +275,10 @@ Page({
             return
           }
 
+          const yearMonth = dayjs(data[idx].date).format('YYYYMM')
+          const delIdx = that.global.allPlan[yearMonth].findIndex((item) => item.id === id)
+          that.global.allPlan[yearMonth].splice(delIdx, 1)
+
           data.splice(idx, 1)
           that.setData({
             list: data
