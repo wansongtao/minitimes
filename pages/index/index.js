@@ -294,88 +294,88 @@ Page({
       show: false
     })
 
-    // const date = dayjs(e.detail)
-    // const nowDate = date.format('YYYY/MM/DD')
+    const date = dayjs(e.detail)
+    const nowDate = date.format('YYYY/MM/DD')
 
-    // // 没有改变日期
-    // if (nowDate === this.data.date) {
-    //   return
-    // }
+    // 没有改变日期
+    if (nowDate === this.data.date) {
+      return
+    }
 
-    // const yearMonth = date.format('YYYYMM')
-    // const allPlan = this.global.allPlan
+    const yearMonth = date.format('YYYYMM')
+    const allPlan = this.global.allPlan
 
-    // // 今天
-    // if (nowDate === dayjs().format('YYYY/MM/DD')) {
-    //   this.global.plans = allPlan[yearMonth].filter((item) => item.date === nowDate)
-    //   this.setPlanNumber(this.global.plans)
+    // 今天
+    if (nowDate === dayjs().format('YYYY/MM/DD')) {
+      this.global.plans = allPlan[yearMonth].filter((item) => item.date === nowDate)
+      this.setPlanNumber(this.global.plans)
 
-    //   const showList = this.global.plans.slice(0, this.data.pageSize)
-    //   this.setData({
-    //     list: showList,
-    //     currPage: 2,
-    //     week: weeks[date.day()],
-    //     date: nowDate
-    //   })
-    //   return
-    // }
+      const showList = this.global.plans.slice(0, this.data.pageSize)
+      this.setData({
+        list: showList,
+        currPage: 2,
+        week: weeks[date.day()],
+        date: nowDate
+      })
+      return
+    }
 
-    // // 没有这个月份的数据，需要去文件中读取
-    // if (!allPlan[yearMonth] || !allPlan[yearMonth].length) {
-    //   const list = this.getFilePlanData(yearMonth)
+    // 没有这个月份的数据，需要去文件中读取
+    if (!allPlan[yearMonth] || !allPlan[yearMonth].length) {
+      const list = this.getFilePlanData(yearMonth)
 
-    //   if (!list.length) {
-    //     wx.showToast({
-    //       title: '无当前月份的相关数据',
-    //       icon: 'none'
-    //     })
-    //     return
-    //   }
+      if (!list.length) {
+        wx.showToast({
+          title: '无当前月份的相关数据',
+          icon: 'none'
+        })
+        return
+      }
 
-    //   this.global.allPlan[yearMonth] = this.planDataSort(list)
+      this.global.allPlan[yearMonth] = this.planDataSort(list)
 
-    //   const nowList = list.filter((item) => item.date === nowDate)
-    //   if (!nowList.length) {
-    //     wx.showToast({
-    //       title: '无当前日的相关数据',
-    //       icon: 'none'
-    //     })
-    //     return
-    //   }
+      const nowList = list.filter((item) => item.date === nowDate)
+      if (!nowList.length) {
+        wx.showToast({
+          title: '无当前日的相关数据',
+          icon: 'none'
+        })
+        return
+      }
 
-    //   this.global.plans = nowList
-    //   this.setPlanNumber(this.global.plans)
+      this.global.plans = nowList
+      this.setPlanNumber(this.global.plans)
 
-    //   const showList = this.global.plans.slice(0, this.data.pageSize)
-    //   this.setData({
-    //     list: showList,
-    //     currPage: 2,
-    //     week: weeks[date.day()],
-    //     date: nowDate
-    //   })
-    //   return
-    // }
+      const showList = this.global.plans.slice(0, this.data.pageSize)
+      this.setData({
+        list: showList,
+        currPage: 2,
+        week: weeks[date.day()],
+        date: nowDate
+      })
+      return
+    }
 
-    // const currList = allPlan[yearMonth].filter((item) => item.date === nowDate)
-    // if (!currList.length) {
-    //   wx.showToast({
-    //     title: '无当前日的相关数据',
-    //     icon: 'none'
-    //   })
-    //   return
-    // }
+    const currList = allPlan[yearMonth].filter((item) => item.date === nowDate)
+    if (!currList.length) {
+      wx.showToast({
+        title: '无当前日的相关数据',
+        icon: 'none'
+      })
+      return
+    }
 
-    // this.global.plans = currList
-    // this.setPlanNumber(this.global.plans)
+    this.global.plans = currList
+    this.setPlanNumber(this.global.plans)
 
-    // const showList = this.global.plans.slice(0, this.data.pageSize)
-    // this.setData({
-    //   list: showList,
-    //   currPage: 2,
-    //   week: weeks[date.day()],
-    //   date: nowDate
-    // })
-    // return
+    const showList = this.global.plans.slice(0, this.data.pageSize)
+    this.setData({
+      list: showList,
+      currPage: 2,
+      week: weeks[date.day()],
+      date: nowDate
+    })
+    return
   },
   onCloneNotice() {
     this.setData({
