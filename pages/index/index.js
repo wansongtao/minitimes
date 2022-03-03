@@ -339,6 +339,13 @@ Page({
       return
     }
 
+    const yearMonth = data[idx].date.replace('/', '').substr(0, 6)
+    this.global.allPlan[yearMonth].forEach((item) => {
+      if (item.id === id) {
+        item.state = 1
+      }
+    })
+
     this.setData({
       list: data
     })
