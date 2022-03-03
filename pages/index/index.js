@@ -12,6 +12,7 @@ import {
   dataFormatConversion
 } from '../../utils/util'
 import useUpdateFile from '../../utils/useUpdateFile'
+import updateFileAllText from '../../utils/useUpdateFileAllText'
 
 // 获取应用实例
 // const app = getApp()
@@ -26,9 +27,10 @@ Page({
     week: weeks[dayjs().day()],
     date: dayjs().format('YYYY/MM/DD'),
     plan: {
-      total: 10,
-      done: 5, // 已完成数量
-      continued: 5 // 待完成数量
+      total: 0,
+      done: 0, // 已完成数量
+      continued: 0, // 待完成数量
+      timeout: 0
     },
     list: [],
     currPage: 1, // 页码
@@ -51,6 +53,48 @@ Page({
     if (this.global.plans.length < this.data.pageSize && this.global.load) {
       this.initData()
     }
+  },
+  /**
+   * @description 将已超时(今天之前)未完成的计划，状态修改为已逾期(改变原数组)
+   * @param {object[]} data 计划列表
+   * @param {string} fileName 文件名
+   */
+  updateDataState(data, fileName) {
+    if (!Array.isArray(data)) {
+      console.error('argument type error.');
+      return
+    }
+
+    if (typeof fileName !== 'string') {
+      console.error('argument error.');
+      return 
+    }
+
+    let isUpdate = false
+    const date = new Date(dayjs().format('YYYY/MM/DD')).getTime()
+
+    data.forEach((item) => {
+      // 未完成且未删除的超时计划
+      if (new Date(item.date).getTime() < date && item.state === 0 && item.isDelete === 0) {
+        isUpdate = true
+        item.state = 2
+        item.updateTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+      }
+    })
+
+    // 没有要更新的数据
+    if (!isUpdate) {
+      return
+    }
+
+    setTimeout(() => {
+      let text = ''
+      data.forEach((item) => {
+        text += `${JSON.stringify(item)}${separator}`
+      })
+
+      updateFileAllText(fileName, text)
+    }, 0);
   },
   /**
    * @description 计划列表数据排序，状态升序+时间升序
@@ -106,7 +150,8 @@ Page({
     const plan = {
       total: list.length,
       done: 0,
-      continued: 0
+      continued: 0,
+      timeout: 0
     }
 
     list.forEach((item) => {
@@ -116,6 +161,10 @@ Page({
 
       if (item.state === 1) {
         plan.done += 1
+      }
+
+      if (item.state === 2) {
+        plan.timeout += 1
       }
     })
 
@@ -146,6 +195,8 @@ Page({
   initData() {
     const date = dayjs().format('YYYYMM')
     const list = this.planDataSort(this.getFilePlanData(date))
+
+    this.updateDataState(list, setFileName(planPrev, date))
 
     // 保存当前月份的数据
     this.global.allPlan[date] = list
@@ -332,7 +383,10 @@ Page({
         return
       }
 
-      this.global.allPlan[yearMonth] = this.planDataSort(list)
+      const sortList = this.planDataSort(list)
+      this.updateDataState(sortList, setFileName(planPrev, yearMonth))
+
+      this.global.allPlan[yearMonth] = sortList
 
       const nowList = list.filter((item) => item.date === nowDate)
       if (!nowList.length) {
