@@ -14,6 +14,9 @@ import {
     dataFormatConversion
 } from '../../utils/util'
 
+// 获取应用实例
+const app = getApp()
+
 Page({
     data: {
         name: '',
@@ -243,6 +246,8 @@ Page({
 
         if (isSuccess) {
             this.initData()
+            app.globalData.isUpdatePlan = true
+            app.globalData.updatePlanDate = data.date
 
             wx.showToast({
                 title: '添加成功',

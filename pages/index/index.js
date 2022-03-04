@@ -15,7 +15,7 @@ import useUpdateFile from '../../utils/useUpdateFile'
 import updateFileAllText from '../../utils/useUpdateFileAllText'
 
 // 获取应用实例
-// const app = getApp()
+const app = getApp()
 
 Page({
   data: {
@@ -37,21 +37,33 @@ Page({
     pageSize: 6 // 每页条数
   },
   global: {
-    load: 0, // 0 第一次打开
     plans: [], // 今天的计划数据
     allPlan: {} // 读取过的月份计划数据
   },
   onLoad() {
     this.initData()
-
-    setTimeout(() => {
-      this.global.load = 1
-    }, 100);
   },
   onShow() {
-    // 从其他页面返回该页面时且显示的数据小于设定的条数时，重新初始化
-    if (this.global.plans.length < this.data.pageSize && this.global.load) {
-      this.initData()
+    if (app.globalData.isUpdatePlan && app.globalData.updatePlanDate) {
+      const date = app.globalData.updatePlanDate.replace('/', '').substr(0, 6)
+      const list = this.planDataSort(this.getFilePlanData(date))
+
+      // 更新当前月份的数据
+      this.global.allPlan[date] = list
+
+      if (this.data.date === app.globalData.updatePlanDate) {
+        // 更新当天的数据
+        this.global.plans = list.filter((item) => item.date === this.data.date)
+        this.setPlanNumber(this.global.plans)
+
+        const showList = this.global.plans.slice(0, this.data.currPage * this.data.pageSize)
+        this.setData({
+          list: showList
+        })
+      }
+
+      app.globalData.isUpdatePlan = false
+      app.globalData.updatePlanDate = ''
     }
   },
   /**
@@ -67,7 +79,7 @@ Page({
 
     if (typeof fileName !== 'string') {
       console.error('argument error.');
-      return 
+      return
     }
 
     let isUpdate = false
@@ -188,8 +200,7 @@ Page({
     const end = data.currPage * data.pageSize
     const newList = [...data.list, ...plans.slice(start, end)]
     this.setData({
-      list: newList,
-      currPage: data.currPage + 1
+      list: newList
     })
   },
   initData() {
@@ -208,8 +219,7 @@ Page({
 
     const showList = this.global.plans.slice(0, this.data.pageSize)
     this.setData({
-      list: showList,
-      currPage: 2
+      list: showList
     })
   },
   handlerOpenDialog() {
@@ -227,6 +237,9 @@ Page({
       return
     }
 
+    this.setData({
+      currPage: this.data.currPage + 1
+    })
     this.loadPlans()
   },
   handlerDel(e) {
@@ -384,7 +397,7 @@ Page({
       const showList = this.global.plans.slice(0, this.data.pageSize)
       this.setData({
         list: showList,
-        currPage: 2,
+        currPage: 1,
         week: weeks[date.day()],
         date: nowDate
       })
@@ -423,7 +436,7 @@ Page({
       const showList = this.global.plans.slice(0, this.data.pageSize)
       this.setData({
         list: showList,
-        currPage: 2,
+        currPage: 1,
         week: weeks[date.day()],
         date: nowDate
       })
@@ -445,7 +458,7 @@ Page({
     const showList = this.global.plans.slice(0, this.data.pageSize)
     this.setData({
       list: showList,
-      currPage: 2,
+      currPage: 1,
       week: weeks[date.day()],
       date: nowDate
     })
