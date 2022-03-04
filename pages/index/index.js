@@ -293,8 +293,14 @@ Page({
           that.global.allPlan[yearMonth].splice(delIdx, 1)
 
           data.splice(idx, 1)
+
+          const planNum = that.data.plan
+          planNum.total -= 1
+          planNum.continued -= 1
+
           that.setData({
-            list: data
+            list: data,
+            plan: planNum
           })
 
           wx.showToast({
@@ -362,6 +368,8 @@ Page({
     this.setData({
       list: data
     })
+
+    this.setPlanNumber(this.global.plans)
 
     wx.showToast({
       title: '操作成功',
