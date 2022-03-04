@@ -1,0 +1,7 @@
+/* pages/noteList/index.wxss */
+.notelist {
+  box-sizing: border-box;
+  padding: 20rpx 10rpx;
+  width: 100vw;
+  min-height: 100vh;
+}
