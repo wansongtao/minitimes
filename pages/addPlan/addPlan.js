@@ -1,6 +1,7 @@
 // pages/addPlan/addPlan.js
 import dayjs from 'dayjs'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
+import { showModal } from '../../utils/dialog'
 import {
     separator,
     planPrev
@@ -8,8 +9,13 @@ import {
 import {
     writeFile,
     setFileName,
-    verifyDataFormat
+    readFile,
+    verifyDataFormat,
+    dataFormatConversion
 } from '../../utils/util'
+
+// 获取应用实例
+const app = getApp()
 
 Page({
     data: {
@@ -28,6 +34,51 @@ Page({
      */
     onLoad: function (options) {
         this.setDefaultTime()
+    },
+    /**
+     * @description 获取文件内容
+     * @param {string} fileName 文件名
+     * @returns {Object[]} 
+     */
+    getFileContent(fileName) {
+        try {
+            if (typeof fileName !== 'string' || fileName === '') {
+                return []
+            }
+
+            const text = readFile(fileName)
+
+            if (!text) {
+                console.error('read file error');
+                return []
+            }
+
+            const list = dataFormatConversion(text, separator)
+
+            return list
+        } catch (e) {
+            console.error(e);
+            return []
+        }
+    },
+    /**
+     * @description 查询是否有相同id的数据
+     * @param {object[]} data
+     * @param {number} id 
+     * @returns {Boolean} 有true，没有false
+     */
+    querySameId(data, id) {
+        return data.some((item) => item.id === id)
+    },
+    /**
+     * @description 查询该时间内是否已有其他计划
+     * @param {object[]} data 
+     * @param {string} date
+     * @param {string} time 
+     * @returns {Boolean} 有true
+     */
+    querySameTime(data, date, time) {
+        return data.some((item) => item.date === date && item.startTime <= time && item.endTime >= time)
     },
     setDefaultTime() {
         const hour = dayjs().hour()
@@ -131,7 +182,7 @@ Page({
             showTimeDia: false
         })
     },
-    onSubmit() {
+    async onSubmit() {
         if (this.data.name === '') {
             wx.showToast({
                 title: '名称不能为空',
@@ -166,10 +217,37 @@ Page({
         }
 
         const fileName = setFileName(planPrev, dayjs(data.date).format('YYYYMM'))
+
+        const list = this.getFileContent(fileName)
+        if (list.length) {
+            const isSameId = this.querySameId(list, data.id)
+            if (isSameId) {
+                console.error('id error');
+                wx.showToast({
+                    title: '添加失败',
+                    icon: 'error'
+                })
+                return
+            }
+
+            const isSameTime = this.querySameTime(list, data.date, data.startTime)
+            if (isSameTime) {
+                const isRes = await showModal('提示', '该时间段内已有其他计划，确定要添加吗?').catch((err) => {
+                    return true
+                })
+
+                if (!isRes) {
+                    return
+                }
+            }
+        }
+
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {
             this.initData()
+            app.globalData.isUpdatePlan = true
+            app.globalData.updatePlanDate = data.date
 
             wx.showToast({
                 title: '添加成功',

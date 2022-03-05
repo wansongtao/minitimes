@@ -1,39 +1,40 @@
 {
-    "entryPagePath": "pages/index/index",
-    "pages": [
-        "pages/index/index",
-        "pages/note/note",
-        "pages/addPlan/addPlan"
-    ],
-    "window": {
-        "backgroundTextStyle": "light",
-        "navigationBarBackgroundColor": "#fff",
-        "navigationBarTitleText": "时间",
-        "navigationBarTextStyle": "black"
-    },
-    "tabBar": {
-        "color": "#999",
-        "backgroundColor": "#fff",
-        "selectedColor": "#333",
-        "list": [
-            {
-                "pagePath": "pages/index/index",
-                "iconPath": "./assets/icons/time.png",
-                "selectedIconPath": "./assets/icons/time_active.png",
-                "text": "每日计划"
-            },
-            {
-                "pagePath": "pages/note/note",
-                "iconPath": "./assets/icons/note.png",
-                "selectedIconPath": "./assets/icons/note_avtive.png",
-                "text": "奇思妙想"
-            }
-        ]
-    },
-    "usingComponents": {
-        "van-toast": "@vant/weapp/toast/index",
-        "van-cell": "@vant/weapp/cell/index",
-        "van-cell-group": "@vant/weapp/cell-group/index"
-    },
-    "sitemapLocation": "sitemap.json"
+  "entryPagePath": "pages/index/index",
+  "pages": [
+    "pages/index/index",
+    "pages/note/note",
+    "pages/addPlan/addPlan",
+    "pages/noteList/index"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "时间",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#999",
+    "backgroundColor": "#fff",
+    "selectedColor": "#333",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "./assets/icons/time.png",
+        "selectedIconPath": "./assets/icons/time_active.png",
+        "text": "每日计划"
+      },
+      {
+        "pagePath": "pages/note/note",
+        "iconPath": "./assets/icons/note.png",
+        "selectedIconPath": "./assets/icons/note_avtive.png",
+        "text": "奇思妙想"
+      }
+    ]
+  },
+  "usingComponents": {
+    "van-toast": "@vant/weapp/toast/index",
+    "van-cell": "@vant/weapp/cell/index",
+    "van-cell-group": "@vant/weapp/cell-group/index"
+  },
+  "sitemapLocation": "sitemap.json"
 }

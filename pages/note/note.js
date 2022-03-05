@@ -1,11 +1,19 @@
 // pages/note/note.js
+import dayjs from 'dayjs'
+import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
+import {
+    separator
+} from '../../config/index'
+
 Page({
 
     /**
      * 页面的初始数据
      */
     data: {
-
+        setHeight: {maxHeight: 300, minHeight: 300},
+        title: '',
+        content: ''
     },
 
     /**
@@ -14,53 +22,38 @@ Page({
     onLoad: function (options) {
 
     },
-
     /**
-     * 生命周期函数--监听页面初次渲染完成
+     * @description 修改表单项的值
+     * @param {*} e 
      */
-    onReady: function () {
+    onChangeValue(e) {
+        let val = e.detail
 
+        if (val.indexOf(separator) !== -1) {
+            wx.showToast({
+                title: `非法字符${separator}`,
+                icon: 'error'
+            })
+            val = val.replace(separator, '')
+        }
+
+        this.setData({
+            [e.target.dataset.name]: val
+        })
     },
-
-    /**
-     * 生命周期函数--监听页面显示
-     */
-    onShow: function () {
-
+    onVoice() {
+        // 显示开发中弹窗
+        Toast('')
     },
+    onSubmit(e) {
+        console.log(e.detail.value);
 
-    /**
-     * 生命周期函数--监听页面隐藏
-     */
-    onHide: function () {
-
+        Toast('')
     },
-
-    /**
-     * 生命周期函数--监听页面卸载
-     */
-    onUnload: function () {
-
-    },
-
-    /**
-     * 页面相关事件处理函数--监听用户下拉动作
-     */
-    onPullDownRefresh: function () {
-
-    },
-
-    /**
-     * 页面上拉触底事件的处理函数
-     */
-    onReachBottom: function () {
-
-    },
-
-    /**
-     * 用户点击右上角分享
-     */
-    onShareAppMessage: function () {
-
+    onReset() {
+        this.setData({
+            title: '',
+            content: ''
+        })
     }
 })

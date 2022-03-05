@@ -1,9 +1,36 @@
 /* pages/note/note.wxss */
 .note {
+  box-sizing: border-box;
+  padding: 20rpx 10rpx;
+  width: 100vw;
+  min-height: 100vh;
+  background-color: #f7f8fa;
+}
+
+.note_title {
+  width: 100%;
+}
+
+.plan_item {
   display: flex;
-  flex-direction: column;
+  margin-bottom: 20rpx;
+  background-color: #fff;
+}
+
+.plan_item_btn {
+  position: relative;
+  display: flex;
   align-items: center;
   justify-content: center;
-  width: 100vw;
-  height: 100vh;
+  width: 80rpx;
+}
+
+.item_btn_icon {
+  width: 60rpx;
+}
+
+.btn_posi {
+  position: absolute;
+  top: 10rpx;
+  right: 10rpx;
 }

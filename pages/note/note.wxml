@@ -1,5 +1,37 @@
 <!--pages/note/note.wxml-->
 <view class="note">
-  <image src="/assets/images/notebg.png" mode="widthFix"></image>
-  <view>拼命开发中~</view>
+  <view class="note_more">
+    <van-cell title="查看笔记" is-link url="/pages/noteList/index" />
+  </view>
+  <view class="note_title">
+    <van-divider contentPosition="center" customStyle="color: #000; border-color: #999; font-size: 14px;">
+      记录美好生活
+    </van-divider>
+  </view>
+  <form catchsubmit="onSubmit" catchreset="onReset">
+    <view class="plan_item">
+      <van-field name="title" data-name="title" label="标题" title-width="80rpx" required value="{{ title }}" placeholder="请输入标题" custom-style="width: calc(100vw - 100rpx);" confirm-type="完成" maxlength="{{20}}" clearable bind:change="onChangeValue" />
+      <view class="plan_item_btn" bindtap="onVoice">
+        <image src="/assets/icons/microphone.png" class="item_btn_icon" mode="widthFix"></image>
+      </view>
+    </view>
+    <view class="plan_item">
+      <van-field name="content" data-name="content" label="内容" title-width="80rpx" required type="textarea" value="{{ content }}" placeholder="请输入内容" custom-style="width: calc(100vw - 100rpx);" autosize="{{setHeight}}" confirm-type="完成" maxlength="{{999}}" show-word-limit clearable bind:change="onChangeValue" />
+      <view class="plan_item_btn" bindtap="onVoice">
+        <image src="/assets/icons/microphone.png" class="item_btn_icon btn_posi" mode="widthFix"></image>
+      </view>
+    </view>
+    <view style="padding-top: 20rpx;">
+      <van-button type="primary" plain block form-type="submit">记录</van-button>
+    </view>
+    <view style="padding-top: 20rpx;">
+      <van-button type="default" plain block form-type="reset">重置</van-button>
+    </view>
+  </form>
+
+  <!-- 开发中弹窗 -->
+  <van-toast id="van-toast">
+    <image src="/assets/icons/under_dev.png" style="width: 128rpx;" mode="widthFix"></image>
+    <text>拼命开发中~</text>
+  </van-toast>
 </view>
