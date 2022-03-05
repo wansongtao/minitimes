@@ -1,5 +1,5 @@
 <!--pages/addPlan/addPlan.wxml-->
-<image src="/assets/images/jobplan.png" mode="widthFix" style="display: block; margin: 0 auto;width: 80vw;"></image>
+<image src="https://636c-cloud1-9g2nav8vcc28213c-1307808166.tcb.qcloud.la/jobplan.png?sign=dff6e97d6811757fd010c884435d034f&t=1646460820" mode="widthFix" style="display: block; margin: 0 auto;width: 80vw;"></image>
 <form class="plan_container">
   <view class="plan_item">
     <van-cell-group>

@@ -4,7 +4,7 @@
     <view class="notice_btn" bindtap="onCloneNotice"></view>
     <van-notice-bar left-icon="volume-o" text="{{notice}}" />
   </view>
-  <image src="/assets/images/head_bg.jpg" class="header_position head_bg" style="{{showNotice ? '' : 'top: 10rpx;'}}"></image>
+  <image src="https://636c-cloud1-9g2nav8vcc28213c-1307808166.tcb.qcloud.la/head_bg.jpg?sign=9a2c7d3d898c36cec2ebb5f05e88e241&t=1646460610" class="header_position head_bg" style="{{showNotice ? '' : 'top: 10rpx;'}}"></image>
   <view class="header_position header" style="{{showNotice ? '' : 'top: 10rpx;'}}">
     <view class="index_header_date" bindtap="handlerOpenDialog">
       <view class="header_date_week">{{week}}</view>
@@ -36,7 +36,7 @@
   </view>
   <view class="index_plans">
     <view class="index_plans_empty" wx:if="{{list.length === 0}}">
-      <image src="../../assets/images/notebg.png" mode="widthFix"></image>
+      <image src="https://636c-cloud1-9g2nav8vcc28213c-1307808166.tcb.qcloud.la/notebg.png?sign=bd2d36f5731b08ee4bb6e063dd1894fb&t=1646460686" mode="widthFix"></image>
       <view class="plans_empty_text">快去添加今日计划吧~</view>
     </view>
     <scroll-view scroll-y="{{true}}" style="{{showNotice ? '' : 'height: calc(100vh - 400rpx);'}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bind:scrolltolower="handlerLoad" wx:else>
