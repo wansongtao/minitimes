@@ -23,7 +23,7 @@ Page({
         description: '',
         date: dayjs().format('YYYY/MM/DD'),
         startTime: '',
-        endTime: '14:00',
+        endTime: '',
         showDateDia: false,
         showTimeDia: false,
         timeType: 0,
@@ -81,11 +81,19 @@ Page({
         return data.some((item) => item.date === date && item.startTime <= time && item.endTime >= time)
     },
     setDefaultTime() {
-        const hour = dayjs().hour()
+        const date = dayjs()
+    
+        // 将分钟数向上取整，为5倍数
+        const nowMinutes = Number(date.format('HH:mm').substr(3, 6))
+        const startMinute = nowMinutes - nowMinutes % 5 + 5
+
+        const startTime = date.minute(startMinute).format('HH:mm')
+
+        const endTime = date.minute(startMinute + 15).format('HH:mm')
 
         this.setData({
-            startTime: `${hour}:00`,
-            endTime: `${hour}:30`
+            startTime,
+            endTime
         })
     },
     initData() {
