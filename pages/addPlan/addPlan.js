@@ -78,13 +78,13 @@ Page({
      * @returns {Boolean} 有true
      */
     querySameTime(data, date, time) {
-        return data.some((item) => item.date === date && item.startTime <= time && item.endTime >= time)
+        return data.some((item) => item.date === date && item.startTime <= time && item.endTime > time)
     },
     setDefaultTime() {
         const date = dayjs()
     
         // 将分钟数向上取整，为5倍数
-        const nowMinutes = Number(date.format('HH:mm').substr(3, 6))
+        const nowMinutes = Number(date.format('HH:mm').substr(3, 5))
         const startMinute = nowMinutes - nowMinutes % 5 + 5
 
         const startTime = date.minute(startMinute).format('HH:mm')
@@ -98,8 +98,8 @@ Page({
     },
     resetData() {
         const lastTime = this.data.endTime
-        const startTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 6))).format('HH:mm')
-        const endTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 6)) + 15).format('HH:mm')
+        const startTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 5))).format('HH:mm')
+        const endTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 5)) + 15).format('HH:mm')
 
         this.setData({
             name: '',
@@ -152,6 +152,7 @@ Page({
         const data = {
             showTimeDia: false
         }
+
         if (this.data.timeType) {
             // 结束时间
             if (e.detail <= this.data.startTime) {
@@ -166,11 +167,27 @@ Page({
         } else {
             // 开始时间
             if (e.detail >= this.data.endTime) {
+                if (e.detail === '23:59') {
+                    wx.showToast({
+                        title: '开始时间必须小于结束时间',
+                        icon: 'none'
+                    })
+                    return
+                }
+
+                const hour = Number(e.detail.substr(0, 2))
+                const minutes = Number(e.detail.substr(3, 5))
+
+                if (hour === 23 && minutes >= 45) {
+                    data.endTime = '23:59'
+                } else {
+                    data.endTime = dayjs().hour(hour).minute(minutes + 15).format('HH:mm')
+                }
+
                 wx.showToast({
-                    title: '开始时间必须小于结束时间',
+                    title: '开始时间必须小于结束时间，已为您自动调整结束时间',
                     icon: 'none'
                 })
-                return
             }
 
             data.startTime = e.detail
