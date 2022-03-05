@@ -32,7 +32,12 @@
       <van-cell title="结束时间" data-type="1" value="{{ endTime }}" is-link bind:click="onShowTimeDia" />
     </van-cell-group>
   </view>
-  <van-button type="primary" plain block bind:click="onSubmit">添加计划</van-button>
+  <van-button type="primary" plain block bind:click="onSubmit" wx:if="{{!isUpdate}}">
+    添加
+  </van-button>
+  <van-button type="warning" plain block bind:click="onUpdatePlan" wx:if="{{isUpdate}}">
+    修改
+  </van-button>
 </form>
 <!-- 日历 -->
 <van-calendar show="{{ showDateDia }}" bind:close="onCloseDateDia" bind:confirm="onConfirmDate" />

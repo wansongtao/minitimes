@@ -476,5 +476,31 @@ Page({
     this.setData({
       showNotice: false
     })
+  },
+  onUpdate(e) {
+    const id = e.target.dataset.id
+    const item = this.data.list.find((item) => item.id === id)
+
+    if (!item) {
+      wx.showToast({
+        title: '修改错误',
+        icon: 'error'
+      })
+      console.error('id error')
+      return
+    }
+
+    if (item.state !== 0 || item.isDelete === 1) {
+      wx.showToast({
+        title: '不能修改已完成、已删除、已逾期的计划',
+        icon: 'none'
+      })
+      return
+    }
+
+    const update = encodeURIComponent(JSON.stringify(item))
+    wx.navigateTo({
+      url: `/pages/addPlan/addPlan?data=${update}`,
+    })
   }
 })

@@ -135,15 +135,28 @@
   border-radius: 12rpx;
 }
 
-.plan_card_del {
+.plan_card_right {
+  display: flex;
+  width: 100px;
+  height: 100%;
+  font-size: 24rpx;
+  color: #fff;
+}
+
+.card_right_btn {
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
+  width: 50px;
   height: 100%;
+}
+
+.card_right_del {
   background-color: #ee0a24;
-  color: #fff;
-  font-size: 24rpx;
+}
+
+.card_right_up {
+  background-color: #eea151;
 }
 
 .plan_card_head {

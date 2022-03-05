@@ -6,7 +6,6 @@ import {
 App({
   onLaunch() {
     updateMiniprogram()
-
   },
   globalData: {
     isUpdatePlan: false, // 是否需要更新首页的计划数据

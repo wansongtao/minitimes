@@ -40,7 +40,7 @@
       <view class="plans_empty_text">快去添加今日计划吧~</view>
     </view>
     <scroll-view scroll-y="{{true}}" style="{{showNotice ? '' : 'height: calc(100vh - 400rpx);'}}" enable-back-to-top="{{true}}" scroll-anchoring class="index_plans_box" bind:scrolltolower="handlerLoad" wx:else>
-      <van-swipe-cell right-width="{{50}}" wx:for="{{list}}" wx:key="index" disabled="{{item.state !== 0}}">
+      <van-swipe-cell right-width="{{100}}" wx:for="{{list}}" wx:key="index" disabled="{{item.state !== 0}}">
         <van-cell-group>
           <view class="plan_card">
             <view class="plan_card_head">
@@ -57,8 +57,9 @@
             </view>
           </view>
         </van-cell-group>
-        <view slot="right" class="plan_card_del" data-id="{{item.id}}" bindtap="handlerDel">
-          删除
+        <view slot="right" class="plan_card_right">
+          <view class="card_right_btn card_right_up" data-id="{{item.id}}" bindtap="onUpdate">修改</view>
+          <view class="card_right_btn card_right_del" data-id="{{item.id}}" bindtap="handlerDel">删除</view>
         </view>
       </van-swipe-cell>
     </scroll-view>

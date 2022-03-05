@@ -1,7 +1,9 @@
 // pages/addPlan/addPlan.js
 import dayjs from 'dayjs'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
-import { showModal } from '../../utils/dialog'
+import {
+    showModal
+} from '../../utils/dialog'
 import {
     separator,
     planPrev
@@ -13,6 +15,7 @@ import {
     verifyDataFormat,
     dataFormatConversion
 } from '../../utils/util'
+import useUpdateFile from '../../utils/useUpdateFile'
 
 // 获取应用实例
 const app = getApp()
@@ -27,13 +30,31 @@ Page({
         showDateDia: false,
         showTimeDia: false,
         timeType: 0,
-        currentTime: ''
+        currentTime: '',
+        isUpdate: false
+    },
+    global: {
+        updateData: null
     },
     /**
      * 生命周期函数--监听页面加载
      */
     onLoad: function (options) {
-        this.setDefaultTime()
+        if (options.data) {
+            const updateData = JSON.parse(decodeURIComponent(options.data))
+            this.global.updateData = updateData
+
+            this.setData({
+                name: updateData.name,
+                description: updateData.description,
+                date: updateData.date,
+                startTime: updateData.startTime,
+                endTime: updateData.endTime,
+                isUpdate: true
+            })
+        } else {
+            this.setDefaultTime()
+        }
     },
     /**
      * @description 获取文件内容
@@ -82,7 +103,7 @@ Page({
     },
     setDefaultTime() {
         const date = dayjs()
-    
+
         // 将分钟数向上取整，为5倍数
         const nowMinutes = Number(date.format('HH:mm').substr(3, 5))
         const startMinute = nowMinutes - nowMinutes % 5 + 5
@@ -108,6 +129,7 @@ Page({
             startTime,
             endTime
         })
+        this.global.updateData = null
     },
     /**
      * @description 修改表单项的值
@@ -286,5 +308,75 @@ Page({
                 icon: 'error'
             })
         }
+    },
+    onUpdatePlan() {
+        if (this.data.name === '') {
+            wx.showToast({
+                title: '名称不能为空',
+                icon: 'error'
+            })
+            return
+        }
+
+        const inputData = this.data
+        const oldData = this.global.updateData
+
+        if (inputData.name === oldData.name && inputData.description === oldData.description && inputData.date === oldData.date && inputData.startTime === oldData.startTime && inputData.endTime === oldData.endTime) {
+            wx.showToast({
+                title: '您没有修改任何内容',
+                icon: 'none'
+            })
+
+            return
+        }
+
+        const data = {
+            id: oldData.id,
+            name: inputData.name.replace(separator, ''),
+            description: inputData.description.replace(separator, ''),
+            date: inputData.date, // 计划日期
+            startTime: inputData.startTime, // 计划开始时间
+            endTime: inputData.endTime, // 计划结束时间
+            state: 0, // 0 待完成  1 已完成  2已逾期
+            isDelete: 0, // 0 正常  1 已删除
+            createTime: oldData.createTime,
+            updateTime: dayjs().format('YYYY/MM/DD HH:mm:ss'),
+            deleteTime: ''
+        }
+
+        const isVerify = verifyDataFormat(data, separator)
+        if (!isVerify) {
+            wx.showToast({
+                title: '修改失败',
+                icon: 'error'
+            })
+            return
+        }
+
+        const isSuccess = useUpdateFile(oldData, data)
+        if (!isSuccess) {
+            wx.showToast({
+                title: '修改失败',
+                icon: 'error'
+            })
+            return
+        }
+
+        this.resetData()
+        this.setDefaultTime()
+        app.globalData.isUpdatePlan = true
+        app.globalData.updatePlanDate = data.date
+
+        wx.showToast({
+            title: '修改成功',
+            icon: 'success',
+            duration: 500
+        })
+
+        setTimeout(() => {
+            wx.navigateBack({
+                delta: 0
+            })
+        }, 500);
     }
 })

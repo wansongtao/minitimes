@@ -1,5 +1,5 @@
 {
-  "navigationBarTitleText": "创建计划",
+  "navigationBarTitleText": "创建/修改计划",
   "usingComponents": {
     "van-field": "@vant/weapp/field/index",
     "van-calendar": "@vant/weapp/calendar/index",
