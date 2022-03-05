@@ -96,15 +96,17 @@ Page({
             endTime
         })
     },
-    initData() {
-        const hour = dayjs().hour()
+    resetData() {
+        const lastTime = this.data.endTime
+        const startTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 6))).format('HH:mm')
+        const endTime = dayjs().hour(Number(lastTime.substr(0, 2))).minute(Number(lastTime.substr(3, 6)) + 15).format('HH:mm')
 
         this.setData({
             name: '',
             description: '',
             date: dayjs().format('YYYY/MM/DD'),
-            startTime: `${hour}:00`,
-            endTime: `${hour}:30`
+            startTime,
+            endTime
         })
     },
     /**
@@ -253,7 +255,7 @@ Page({
         const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
 
         if (isSuccess) {
-            this.initData()
+            this.resetData()
             app.globalData.isUpdatePlan = true
             app.globalData.updatePlanDate = data.date
 
