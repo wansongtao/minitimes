@@ -5,65 +5,43 @@ Page({
    * 页面的初始数据
    */
   data: {
-
+    searchVal: '',
+    list: [{
+        id: 324133424,
+        title: '不过是大梦一场空',
+        content: '不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。不过是孤影照惊鸿，不过是白驹之过一场梦。',
+        createTime: '2022/03/07 12:12:12'
+      }
+    ]
   },
 
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    wx.showToast({
-      title: '您还没有任何笔记，快去记录生活中的点点滴滴~',
-      icon: 'none'
+
+  },
+  onSearch() {
+
+  },
+  onCancel() {
+    this.setData({
+      searchVal: ''
     })
   },
-
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+  onLoad() {
 
   },
-
-  /**
-   * 生命周期函数--监听页面显示
-   */
-  onShow: function () {
-
+  onLook(e) {
+    const id = e.target.dataset.id
+    console.log(id);
   },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
+  onUpdate(e) {
+    const id = e.target.dataset.id
+    console.log(id);
   },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+  onDelete(e) {
+    const id = e.target.dataset.id
+    console.log(id);
   }
 })
