@@ -14,6 +14,11 @@ export const weeks = [
 export const planPrev = 'plans_'
 
 /**
+ * @description 笔记文件名前缀
+ */
+export const noteFilePrev = 'notes_'
+
+/**
  * @description 数据分割符
  */
 export const separator = '#&#'
@@ -30,7 +35,7 @@ export const commonNotice = '本应用不会上传您的任何数据，所有数
  * @param {string} data.title 笔记标题，最长20个字符
  * @param {string} data.content 笔记内容，最长999个字符
  * @param {number} data.isDelete 是否删除，0 否  1 是
- * @param {string} data.createTime 创建时间
+ * @param {string} data.createTime 创建时间，格式：yyyy/mm/dd hh:mm:ss
  * @param {string} [data.updateTime] 修改时间
  * @param {string} [data.deleteTime] 删除时间
  * @param {string} separator 不允许出现在标题和内容中的特殊字符
