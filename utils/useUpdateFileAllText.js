@@ -7,6 +7,7 @@ import {
 /**
  * @description 将指定文件内的所有内容修改为新内容(删除原文件)
  * @param {string} fileName 文件名
+ * @param {string} text 新内容
  * @returns {boolean} 成功true，失败false
  */
 const updateFileAllText = (fileName, text) => {
