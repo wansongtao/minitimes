@@ -9,7 +9,6 @@
     ]
   },
   "setting": {
-    "lazyCodeLoading": "requiredComponents",
     "urlCheck": true,
     "es6": true,
     "enhance": true,
@@ -28,9 +27,9 @@
     "uploadWithSourceMap": true,
     "compileHotReLoad": false,
     "lazyloadPlaceholderEnable": false,
-    "useMultiFrameRuntime": true,
-    "useApiHook": true,
-    "useApiHostProcess": true,
+    "useMultiFrameRuntime": false,
+    "useApiHook": false,
+    "useApiHostProcess": false,
     "babelSetting": {
       "ignore": [],
       "disablePlugins": [],
@@ -42,10 +41,10 @@
     "packNpmRelationList": [],
     "minifyWXSS": true,
     "disableUseStrict": false,
+    "minifyWXML": true,
     "showES6CompileOption": false,
     "useCompilerPlugins": false,
-    "ignoreUploadUnusedFiles": true,
-    "minifyWXML": true
+    "ignoreUploadUnusedFiles": true
   },
   "appid": "wxaa656a2b0649c002",
   "projectname": "minitimes",
