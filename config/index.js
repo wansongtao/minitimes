@@ -47,7 +47,7 @@ export const verifyNoteFormat = (data, separator) => {
         return false
     }
 
-    const res = Object.prototype.toString.call(obj).split(' ')[1]
+    const res = Object.prototype.toString.call(data).split(' ')[1]
     if (res.substring(0, res.length - 1).toLowerCase() !== 'object') {
         console.error('argument type error.');
         return false
