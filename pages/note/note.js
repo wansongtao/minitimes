@@ -2,8 +2,11 @@
 import dayjs from 'dayjs'
 import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
 import {
-    separator
+    separator,
+    verifyNoteFormat,
+    noteFilePrev
 } from '../../config/index'
+import { setFileName, readFile, writeFile } from '../../utils/util'
 
 Page({
 
@@ -46,9 +49,54 @@ Page({
         Toast('')
     },
     onSubmit(e) {
-        console.log(e.detail.value);
+        const data = e.detail.value
 
-        Toast('')
+        if (data.name === '' || data.content === '') {
+            wx.showToast({
+              title: '请输入标题和内容哟😉',
+              icon: 'none'
+            })
+            return
+        }
+
+        data.id = new Date().getTime()
+        data.isDelete = 0
+        data.createTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+
+        const isVerify = verifyNoteFormat(data, separator)
+        if (!isVerify) {
+            wx.showToast({
+              title: '添加错误',
+              icon: 'error'
+            })
+            return
+        }
+
+        const fileName = setFileName(noteFilePrev)
+        const note = readFile(fileName)
+        if (note && note.indexOf(data.id) !== -1) {
+            wx.showToast({
+              title: '已存在相同id的笔记啦🤣',
+              icon: 'none'
+            })
+            return
+        }
+
+        const isSuccess = writeFile(fileName, `${JSON.stringify(data)}${separator}`)
+        if (!isSuccess) {
+            wx.showToast({
+              title: '添加失败',
+              icon: 'error'
+            })
+            return
+        }
+
+        wx.showToast({
+          title: '添加成功',
+          icon: 'success'
+        })
+
+        this.onReset()
     },
     onReset() {
         this.setData({
