@@ -9,7 +9,7 @@
       <image src="https://636c-cloud1-9g2nav8vcc28213c-1307808166.tcb.qcloud.la/empty.png?sign=d0603233f9be475ff402035200178050&t=1646633276" mode="widthFix"></image>
       <view class=note_main_text">空空如也~</view>
     </view>
-    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="note_main_list" bind:scrolltolower="onLoad" wx:else>
+    <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="note_main_list" bind:scrolltolower="onLoadMore" wx:else>
       <van-swipe-cell wx:for="{{list}}" right-width="{{100}}"  wx:key="index">
         <van-cell-group>
           <view class="note_card" data-id="{{item.id}}" bindtap="onLook">
