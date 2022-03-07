@@ -13,7 +13,7 @@ import {
 } from './util'
 
 /**
- * @description 更新文件内容(删除原文件)
+ * @description 更新计划数据文件内容(删除原文件)
  * @param {Object} oldVal 需要更新的项
  * @param {Object} newVal 新项
  * @returns {Boolean} 成功true，失败false
