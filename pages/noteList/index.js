@@ -68,7 +68,10 @@ Page({
     return list.filter((item) => item.isDelete !== 1)
   },
   onSearch() {
-
+    wx.showToast({
+      title: '开发中~',
+      icon: 'none'
+    })
   },
   onCancel() {
     this.setData({
@@ -94,10 +97,20 @@ Page({
   onLook(e) {
     const id = e.target.dataset.id
     console.log(id);
+    
+    wx.showToast({
+      title: '开发中~',
+      icon: 'none'
+    })
   },
   onUpdate(e) {
     const id = e.target.dataset.id
     console.log(id);
+
+    wx.showToast({
+      title: '开发中~',
+      icon: 'none'
+    })
   },
   onDelete(e) {
     const id = e.target.dataset.id
