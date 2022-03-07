@@ -1,6 +1,8 @@
 // pages/noteList/index.js
 import { separator, noteFilePrev} from '../../config/index'
 import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
+import updateNoteFile from '../../utils/updateNote'
+import dayjs from 'dayjs'
 
 Page({
 
@@ -99,6 +101,45 @@ Page({
   },
   onDelete(e) {
     const id = e.target.dataset.id
-    console.log(id);
+    const showList = this.data.list
+    const idx = showList.findIndex((item) => item.id === id)
+    if (idx === -1) {
+      console.error('id error');
+      return
+    }
+
+    // 修改文件中的相关数据
+    const oldVal = JSON.parse(JSON.stringify(showList[idx]))
+    const newVal = JSON.parse(JSON.stringify(oldVal))
+    newVal.isDelete = 1
+    newVal.deleteTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+    const isSuccess = updateNoteFile(oldVal, newVal)
+    if (!isSuccess) {
+      wx.showToast({
+        title: '删除失败',
+        icon: 'error'
+      })
+      return
+    }
+
+    // 删除显示的数据
+    const allData = this.global.allData
+    this.global.allData = allData.filter((item) => item.id !== id)
+    showList.splice(idx, 1)
+
+    const len = showList.length
+    if (len < this.global.allData.length && len % this.global.pageSize) {
+      const adds = this.global.allData.slice(len, len + (len % this.global.pageSize))
+      showList.push(...adds)
+    }
+
+    this.setData({
+      list: showList
+    })
+
+    wx.showToast({
+      title: '删除成功',
+      icon: 'success'
+    })
   }
 })
