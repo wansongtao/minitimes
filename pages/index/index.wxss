@@ -130,7 +130,6 @@
   margin-bottom: 20rpx;
   padding: 10rpx 20rpx;
   width: calc(100vw - 40rpx);
-  /* background-color: #e6dbb9; */
   background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%);
   border-radius: 12rpx;
 }
