@@ -9,7 +9,7 @@ Page({
    */
   data: {
     title: '',
-    content: '',
+    content: [],
     time: '',
     lastUpdateTime: ''
   },
@@ -61,9 +61,11 @@ Page({
       return
     }
 
+    const content = data.content.split('\n')
+
     this.setData({
       title: data.title,
-      content: data.content,
+      content: content,
       time: data.createTime,
       lastUpdateTime: data.updateTime || ''
     })

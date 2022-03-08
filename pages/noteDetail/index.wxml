@@ -5,5 +5,5 @@
 <view class="note_title--minor">
   {{time}}
 </view>
-<rich-text class="note_content">{{content}}</rich-text>
+<view class="note_content" wx:for="{{content}}" wx:key="index">{{item}}</view>
 <view class="tips" wx:if="{{lastUpdateTime}}">最近改动时间：{{lastUpdateTime}}</view>
