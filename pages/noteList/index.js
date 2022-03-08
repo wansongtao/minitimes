@@ -3,6 +3,7 @@ import { separator, noteFilePrev} from '../../config/index'
 import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 import updateNoteFile from '../../utils/updateNote'
 import dayjs from 'dayjs'
+import { showModal } from '../../utils/dialog'
 
 const app = getApp()
 
@@ -127,7 +128,12 @@ Page({
       url: '/pages/note/note',
     })
   },
-  onDelete(e) {
+  async onDelete(e) {
+    const confirm = await showModal('提示', '确认要永久删除该笔记吗？')
+    if (!confirm) {
+      return
+    }
+
     const id = e.target.dataset.id
     const showList = this.data.list
     const idx = showList.findIndex((item) => item.id === id)
