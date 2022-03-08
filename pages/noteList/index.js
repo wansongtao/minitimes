@@ -12,8 +12,12 @@ Page({
    * 页面的初始数据
    */
   data: {
+    show: false,
+    yearMonth: dayjs().format('YYYY/MM'),
     searchVal: '',
-    list: []
+    list: [],
+    timeSheetValue: new Date().getTime(),
+    maxDate: new Date().getTime(),
   },
   global: {
     allData: [],
@@ -26,7 +30,8 @@ Page({
     this.initData()
   },
   initData() {
-    const list = this.getNoteData()
+    const yearMonth = this.data.yearMonth.replace('/', '')
+    const list = this.getNoteData(yearMonth)
 
     if (!list.length) {
       this.global.allData = []
@@ -163,6 +168,26 @@ Page({
     wx.showToast({
       title: '删除成功',
       icon: 'success'
+    })
+  },
+  onShowSheet() {
+    this.setData({
+      show: true
+    })
+  },
+  onSelect(e) {
+    const dateNum = e.detail
+    
+    this.setData({
+      yearMonth: dayjs(dateNum).format('YYYY/MM'),
+      timeSheetValue: e.detail,
+      show: false
+    })
+    this.initData()
+  },
+  onCloseSheet() {
+    this.setData({
+      show: false
     })
   }
 })

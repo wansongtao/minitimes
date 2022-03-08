@@ -3,14 +3,20 @@
   <view class="list_head">
     <van-search value="{{ searchVal }}" placeholder="请输入搜索关键词" show-action bind:search="onSearch" bind:cancel="onCancel" />
   </view>
-  <view class="note_title">笔记列表</view>
+  <view class="note_title">
+    <view>笔记列表</view>
+    <view class="note_title_right" bind:tap="onShowSheet">
+      {{ yearMonth }}
+      <van-icon name="arrow" custom-style="{{show ? 'transform: rotate(90deg);transition: all .3s;' : 'transition: all .3s;'}}" />
+    </view>
+  </view>
   <view class="note_main">
     <view class="note_main_empty" wx:if="{{list.length === 0}}">
       <image src="https://636c-cloud1-9g2nav8vcc28213c-1307808166.tcb.qcloud.la/empty.png?sign=d0603233f9be475ff402035200178050&t=1646633276" mode="widthFix"></image>
       <view class=note_main_text">空空如也~</view>
     </view>
     <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="note_main_list" bind:scrolltolower="onLoadMore" wx:else>
-      <van-swipe-cell wx:for="{{list}}" right-width="{{100}}"  wx:key="index">
+      <van-swipe-cell wx:for="{{list}}" right-width="{{100}}" wx:key="index">
         <van-cell-group>
           <view class="note_card" data-id="{{item.id}}" bindtap="onLook">
             <view class="card_head_tit">{{item.title}}</view>
@@ -29,4 +35,10 @@
       </van-swipe-cell>
     </scroll-view>
   </view>
+
+  <van-action-sheet show="{{ show }}" title="">
+    <view>
+      <van-datetime-picker type="year-month" max-date="{{maxDate}}" value="{{timeSheetValue}}" bind:confirm="onSelect" bind:cancel="onCloseSheet" />
+    </view>
+  </van-action-sheet>
 </view>
