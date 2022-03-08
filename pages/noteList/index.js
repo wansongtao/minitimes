@@ -103,12 +103,19 @@ Page({
     })
   },
   onLook(e) {
-    const id = e.target.dataset.id
-    console.log(id);
-    
-    wx.showToast({
-      title: '开发中~',
-      icon: 'none'
+    const id = e.currentTarget.dataset.id
+    const item = this.data.list.find((item) => item.id == id)
+
+    if (!item) {
+      wx.showToast({
+        title: '未知错误',
+        icon: 'error'
+      })
+      return
+    }
+
+    wx.navigateTo({
+      url: `/pages/noteDetail/index?id=${encodeURIComponent(id)}&date=${encodeURIComponent(item.createTime.substr(0, 10))}`,
     })
   },
   onUpdate(e) {
