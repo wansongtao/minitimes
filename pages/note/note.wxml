@@ -22,7 +22,10 @@
       </view>
     </view>
     <view style="padding-top: 20rpx;">
-      <van-button type="primary" plain block form-type="submit">记录</van-button>
+      <van-button type="primary" plain block form-type="submit" wx:if="{{!isUpdate}}">记录</van-button>
+      <van-button type="warning" plain block bind:click="onUpdate" wx:if="{{isUpdate}}">
+        修改
+      </van-button>
     </view>
     <view style="padding-top: 20rpx;">
       <van-button type="default" plain block form-type="reset">重置</van-button>

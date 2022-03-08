@@ -4,6 +4,8 @@ import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 import updateNoteFile from '../../utils/updateNote'
 import dayjs from 'dayjs'
 
+const app = getApp()
+
 Page({
 
   /**
@@ -105,11 +107,19 @@ Page({
   },
   onUpdate(e) {
     const id = e.target.dataset.id
-    console.log(id);
+    const item = this.data.list.find((item) => item.id === id)
 
-    wx.showToast({
-      title: '开发中~',
-      icon: 'none'
+    if (!item) {
+      wx.showToast({
+        title: '修改失败',
+        icon: 'error'
+      })
+      return
+    }
+
+    app.globalData.updateNoteData = item
+    wx.switchTab({
+      url: '/pages/note/note',
     })
   },
   onDelete(e) {
