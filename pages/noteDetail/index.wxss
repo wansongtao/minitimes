@@ -1,1 +1,37 @@
 /* pages/noteDetail/index.wxss */
+page {
+  box-sizing: border-box;
+  padding: 10rpx 20rpx;
+  background-color: #f7f8fa;
+}
+
+.note_title {
+  font-size: 18px;
+  line-height: 2em;
+  text-align: center;
+  color: #333;
+  font-weight: 500;
+}
+
+.note_title--minor {
+  height: 30px;
+  font-size: 14px;
+  text-align: right;
+  line-height: 30px;
+  color: #999;
+}
+
+.note_content {
+  font-size: 14px;
+  line-height: 1.5em;
+  text-indent: 2em;
+  color: #666;
+}
+
+.tips {
+  margin-top: 10px;
+  font-size: 12px;
+  line-height: 1.5em;
+  color: #999;
+  text-align: right;
+}

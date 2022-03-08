@@ -1,66 +1,87 @@
 // pages/noteDetail/index.js
-Page({
+import dayjs from 'dayjs'
+import { separator, noteFilePrev} from '../../config/index'
+import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 
+Page({
   /**
    * 页面的初始数据
    */
   data: {
-
+    title: '',
+    content: '',
+    time: '',
+    lastUpdateTime: ''
   },
-
+  global: {
+    id: '',
+    date: ''
+  },
   /**
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    if (!options.id || !options.date) {
+      this.back('参数错误')
+      return
+    }
 
+    const id = decodeURIComponent(options.id)
+    const date = decodeURIComponent(options.date)
+
+    this.global.id = id
+    this.global.date = date
+
+    this.initData()
   },
+  initData() {
+    const global = this.global
+    if (!global.id || !global.date) {
+      this.back('参数错误')
+    }
 
-  /**
-   * 生命周期函数--监听页面初次渲染完成
-   */
-  onReady: function () {
+    const date = global.date
+    const fileName = setFileName(noteFilePrev, date.replace('/', '').substr(0, 6))
+    const text = readFile(fileName)
 
+    if (!text) {
+      this.back('获取内容失败')
+      return
+    }
+
+    const list = dataFormatConversion(text, separator)
+    if (!list.length) {
+      this.back('获取内容失败')
+      return
+    }
+
+    const data = list.find((item) => item.id === Number(global.id))
+    if (!data) {
+      this.back('获取内容失败')
+      return
+    }
+
+    this.setData({
+      title: data.title,
+      content: data.content,
+      time: data.createTime,
+      lastUpdateTime: data.updateTime || ''
+    })
   },
-
   /**
-   * 生命周期函数--监听页面显示
+   * @description 弹出错误提示框，并返回上一页
+   * @param {string} [title='参数错误'] 提示语
    */
-  onShow: function () {
+  back(title = '参数错误') {
+    wx.showToast({
+      title,
+      icon: 'error'
+    })
 
-  },
-
-  /**
-   * 生命周期函数--监听页面隐藏
-   */
-  onHide: function () {
-
-  },
-
-  /**
-   * 生命周期函数--监听页面卸载
-   */
-  onUnload: function () {
-
-  },
-
-  /**
-   * 页面相关事件处理函数--监听用户下拉动作
-   */
-  onPullDownRefresh: function () {
-
-  },
-
-  /**
-   * 页面上拉触底事件的处理函数
-   */
-  onReachBottom: function () {
-
-  },
-
-  /**
-   * 用户点击右上角分享
-   */
-  onShareAppMessage: function () {
-
+    setTimeout(() => {
+      wx.navigateBack({
+        delta: 0,
+      })
+    }, 500);
   }
 })
