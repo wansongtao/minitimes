@@ -28,7 +28,7 @@
       </van-button>
     </view>
     <view style="padding-top: 20rpx;">
-      <van-button type="default" plain block form-type="reset">重置</van-button>
+      <van-button type="default" plain block form-type="reset">{{isUpdate ? '取消' : '重置'}}</van-button>
     </view>
   </form>
 

@@ -121,8 +121,10 @@ Page({
     onReset() {
         this.setData({
             title: '',
-            content: ''
+            content: '',
+            isUpdate: false
         })
+        app.globalData.updateNoteData = null
     },
     onUpdate() {
         const oldVal = app.globalData.updateNoteData
