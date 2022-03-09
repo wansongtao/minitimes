@@ -5,7 +5,8 @@
     "pages/note/note",
     "pages/addPlan/addPlan",
     "pages/noteList/index",
-    "pages/noteDetail/index"
+    "pages/noteDetail/index",
+    "pages/noteSearch/index"
   ],
   "window": {
     "backgroundTextStyle": "light",

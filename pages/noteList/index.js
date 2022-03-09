@@ -15,7 +15,6 @@ Page({
   data: {
     show: false,
     yearMonth: dayjs().format('YYYY/MM'),
-    searchVal: '',
     list: [],
     timeSheetValue: new Date().getTime(),
     maxDate: new Date().getTime(),
@@ -76,14 +75,8 @@ Page({
     return list.filter((item) => item.isDelete !== 1)
   },
   onSearch() {
-    wx.showToast({
-      title: '开发中~',
-      icon: 'none'
-    })
-  },
-  onCancel() {
-    this.setData({
-      searchVal: ''
+    wx.navigateTo({
+      url: '/pages/noteSearch/index',
     })
   },
   onLoadMore() {
