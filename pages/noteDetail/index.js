@@ -14,6 +14,8 @@ import {
 } from '../../utils/dialog'
 import updateNoteFile from '../../utils/updateNote'
 
+const app = getApp()
+
 Page({
   /**
    * 页面的初始数据
@@ -100,7 +102,20 @@ Page({
     }, 500);
   },
   onUpdate() {
+    const item = this.global.data
 
+    if (!item) {
+      wx.showToast({
+        title: '修改失败',
+        icon: 'error'
+      })
+      return
+    }
+
+    app.globalData.updateNoteData = item
+    wx.switchTab({
+      url: '/pages/note/note',
+    })
   },
   async onDelete() {
     const confirm = await showModal('提示', '确认要永久删除该笔记吗？')
