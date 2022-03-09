@@ -1,2 +1,10 @@
 <!--pages/noteSearch/index.wxml-->
-<text>pages/noteSearch/index.wxml</text>
+<view class="note_search">
+  <van-search value="{{ searchVal }}" placeholder="请输入搜索关键词" use-action-slot bind:change="onChange" bind:search="onSearch">
+    <view slot="action" bind:tap="onSearch">搜索</view>
+  </van-search>
+
+  <view class="note_fuzzys">
+    
+  </view>
+</view>

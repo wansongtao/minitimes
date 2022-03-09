@@ -1,1 +1,9 @@
 /* pages/noteSearch/index.wxss */
+page {
+  background-color: #f7f8fa;
+}
+
+.note_search {
+  position: relative;
+  height: 54px;
+}
