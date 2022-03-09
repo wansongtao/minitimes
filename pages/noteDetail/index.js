@@ -85,5 +85,11 @@ Page({
         delta: 0,
       })
     }, 500);
+  },
+  onUpdate() {
+
+  },
+  onDelete() {
+    
   }
 })

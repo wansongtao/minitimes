@@ -1,8 +1,17 @@
 /* pages/noteDetail/index.wxss */
 page {
-  box-sizing: border-box;
-  padding: 10rpx 20rpx;
   background-color: #f7f8fa;
+}
+
+.note_detail {
+  overflow-y: auto;
+  box-sizing: border-box;
+  margin: 15px 10px;
+  padding: 10rpx 20rpx;
+  width: calc(100% - 20px);
+  height: calc(100vh - 160px);
+  background-color: #fff;
+  border-radius: 12rpx;
 }
 
 .note_title {
@@ -35,4 +44,8 @@ page {
   line-height: 1.5em;
   color: #999;
   text-align: right;
+}
+
+.detail_footer {
+  margin: 0 10px;
 }
