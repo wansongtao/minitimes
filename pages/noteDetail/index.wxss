@@ -36,6 +36,7 @@ page {
   line-height: 1.5em;
   text-indent: 2em;
   color: #666;
+  word-break: break-all;
 }
 
 .tips {

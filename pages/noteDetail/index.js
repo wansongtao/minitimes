@@ -1,7 +1,18 @@
 // pages/noteDetail/index.js
 import dayjs from 'dayjs'
-import { separator, noteFilePrev} from '../../config/index'
-import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
+import {
+  separator,
+  noteFilePrev
+} from '../../config/index'
+import {
+  setFileName,
+  readFile,
+  dataFormatConversion
+} from '../../utils/util'
+import {
+  showModal
+} from '../../utils/dialog'
+import updateNoteFile from '../../utils/updateNote'
 
 Page({
   /**
@@ -15,7 +26,8 @@ Page({
   },
   global: {
     id: '',
-    date: ''
+    date: '',
+    data: null
   },
   /**
    * 生命周期函数--监听页面加载
@@ -69,6 +81,7 @@ Page({
       time: data.createTime,
       lastUpdateTime: data.updateTime || ''
     })
+    global.data = data
   },
   /**
    * @description 弹出错误提示框，并返回上一页
@@ -89,7 +102,40 @@ Page({
   onUpdate() {
 
   },
-  onDelete() {
-    
+  async onDelete() {
+    const confirm = await showModal('提示', '确认要永久删除该笔记吗？')
+    if (!confirm) {
+      return
+    }
+
+    const global = this.global
+
+    // 修改文件中的相关数据
+    const oldVal = JSON.parse(JSON.stringify(global.data))
+
+    const deleteTime = dayjs().format('YYYY/MM/DD HH:mm:ss')
+    const newVal = {...global.data}
+    newVal.isDelete = 1
+    newVal.deleteTime = deleteTime
+
+    const isSuccess = updateNoteFile(oldVal, newVal)
+    if (!isSuccess) {
+      wx.showToast({
+        title: '删除失败',
+        icon: 'error'
+      })
+      return
+    }
+
+    wx.showToast({
+      title: '删除成功',
+      icon: 'success'
+    })
+
+    setTimeout(() => {
+      wx.redirectTo({
+        url: '/pages/noteList/index',
+      })
+    }, 500);
   }
 })
