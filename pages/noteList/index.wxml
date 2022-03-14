@@ -21,15 +21,7 @@
     <scroll-view scroll-y="{{true}}" enable-back-to-top="{{true}}" scroll-anchoring class="note_main_list" bind:scrolltolower="onLoadMore" wx:else>
       <van-swipe-cell wx:for="{{list}}" right-width="{{100}}" wx:key="index">
         <van-cell-group>
-          <view class="note_card" data-id="{{item.id}}" bindtap="onLook">
-            <view class="card_head_tit">{{item.title}}</view>
-            <view class="note_card_content">
-              {{item.content}}
-            </view>
-            <view class="note_card_tips">
-              {{item.createTime}}
-            </view>
-          </view>
+          <note-card  title="{{item.title}}" content="{{item.content}}" create-time="{{item.createTime}}" card-id="{{item.id}}" />
         </van-cell-group>
         <view slot="right" class="note_card_right">
           <view class="card_right_btn card_right_up" data-id="{{item.id}}" bindtap="onUpdate">修改</view>
