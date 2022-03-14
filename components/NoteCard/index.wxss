@@ -1,0 +1,33 @@
+/* components/NoteCard/index.wxss */
+.note_card {
+  box-sizing: border-box;
+  margin-bottom: 20rpx;
+  padding: 10rpx 20rpx;
+  width: calc(100vw - 40rpx);
+  background-color: #fff;
+  /* background-image: linear-gradient(to top, #e6e9f0 0%, #eef1f5 100%); */
+  border-radius: 12rpx;
+}
+
+.note_card_content {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  -webkit-line-clamp: 3;
+  overflow: hidden;
+  margin: 10rpx 0;
+  font-size: 26rpx;
+  line-height: 36rpx;
+  color: #666;
+  word-break: break-all;
+}
+
+.note_card_tips {
+  font-size: 24rpx;
+  color: #969191;
+  text-align: right;
+}
+
+.card_head_tit {
+  font-size: 32rpx;
+  color: #333;
+}

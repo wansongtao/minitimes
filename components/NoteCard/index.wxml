@@ -1,0 +1,10 @@
+<!--components/NoteCard/index.wxml-->
+<view class="note_card" bindtap="onLook">
+  <view class="card_head_tit">{{title}}</view>
+  <view class="note_card_content">
+    {{content}}
+  </view>
+  <view class="note_card_tips">
+    {{createTime}}
+  </view>
+</view>
