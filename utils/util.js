@@ -269,25 +269,31 @@ export const writeFile = (fileName, data, position) => {
 
 /**
  * @description 设置文件名
+ * @param {string} directory 目录路径
  * @param {string} prev 前缀
  * @param {string} [val] 年月，格式：yyyymm
- * @returns {string} 返回文件名，命名规则：prev + yyyymm.txt
+ * @returns {string} 返回文件名，命名规则：directory + prev + yyyymm.txt
  */
-export const setFileName = (prev, val) => {
+export const setFileName = (directory, prev, val) => {
+  if (typeof directory !== 'string' || directory.indexOf('/') !== 0) {
+    console.error('argument error');
+    return ''
+  }
+
   if (typeof prev !== 'string') {
     console.error('argument error.');
     return ''
   }
 
   if (val) {
-    return `${prev}${val}.txt`
+    return `${directory}/${prev}${val}.txt`
   }
 
   const date = new Date()
   const year = date.getFullYear()
   const month = date.getMonth() + 1
 
-  return `${prev}${year}${month.toString().padStart(2, '0')}.txt`
+  return `${directory}/${prev}${year}${month.toString().padStart(2, '0')}.txt`
 }
 
 /**
