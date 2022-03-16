@@ -22,7 +22,8 @@ const updateFileAllText = (fileName, text) => {
   }
 
   // 将要删除的文件，先重命名，避免创建新文件失败，数据丢失
-  const delFileName = 'delete_' + fileName
+  const suffix = fileName.substr(fileName.lastIndexOf('.'))
+  const delFileName = fileName.replace(suffix, 'delete' + suffix)
   const isRename = renameFile(fileName, delFileName)
 
   // 重命名失败，直接删除

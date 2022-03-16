@@ -35,7 +35,8 @@ const useUpdateFile = (oldVal, newVal) => {
   const newText = text.replace(JSON.stringify(oldVal), JSON.stringify(newVal))
 
   // 将要删除的文件，先重命名，避免创建新文件失败，数据丢失
-  const oldFileName_new = 'delete_' + oldFileName
+  const suffix = oldFileName.substr(oldFileName.lastIndexOf('.')) 
+  const oldFileName_new = oldFileName.replace(suffix, 'delete' + suffix)
   const isRenameDel = renameFile(oldFileName, oldFileName_new)
 
   // 重命名失败，直接删除
