@@ -16,7 +16,7 @@ export const planPrev = 'plans_'
 /**
  * @description 计划文件存放目录
  */
-export const planDirectory = '/plan'
+export const planDirectory = 'plan'
 
 /**
  * @description 笔记相关文件名前缀
@@ -26,7 +26,7 @@ export const noteFilePrev = 'notes_'
 /**
  * @description 笔记文件存放目录
  */
-export const noteDirectory = '/note'
+export const noteDirectory = 'note'
 
 /**
  * @description 数据分割符
