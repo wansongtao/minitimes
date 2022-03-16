@@ -5,10 +5,10 @@
  */
 
 /**
- * @description 创建目录
+ * @description 创建目录，如果目录已存在则不会重新创建，直接返回
  * @param {string} path 目录路径
  * @param {boolean} [recursive=false] 是否在递归创建该目录的上级目录后再创建该目录，默认否
- * @returns {Boolean}
+ * @returns {Boolean} 成功true，失败false
  */
 export const mkdirDirectory = (path, recursive = false) => {
   if (typeof path !== 'string' || typeof recursive !== 'boolean' ) {
