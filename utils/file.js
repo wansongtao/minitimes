@@ -41,16 +41,16 @@ export const mkdirDirectory = (path, recursive = false) => {
 
 /**
  * @description 获取对应目录下的文件列表
- * @param {string} path 目录路径
+ * @param {string} [path] 目录路径
  * @returns {object[]} 成功返回文件列表，失败返回空数组
  */
-export const getFileList = (path) => {
+export const getFileList = (path = '') => {
   if (typeof path !== 'string') {
     console.error('argument type error');
     return []
   }
 
-  if (path.indexOf('/') !== 0) {
+  if (path.indexOf('/') !== 0 && path !== '') {
     path = '/' + path
   }
 
