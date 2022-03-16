@@ -275,7 +275,7 @@ export const writeFile = (fileName, data, position) => {
  * @returns {string} 返回文件名，命名规则：directory + prev + yyyymm.txt
  */
 export const setFileName = (directory, prev, val) => {
-  if (typeof directory !== 'string' || directory.indexOf('/') !== 0) {
+  if (typeof directory !== 'string') {
     console.error('argument error');
     return ''
   }
