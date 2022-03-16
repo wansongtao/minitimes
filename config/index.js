@@ -9,14 +9,24 @@ export const weeks = [
 ];
 
 /**
- * @description 文件名前缀
+ * @description 计划相关文件名前缀
  */
 export const planPrev = 'plans_'
 
 /**
- * @description 笔记文件名前缀
+ * @description 计划文件存放目录
+ */
+export const planDirectory = '/plan'
+
+/**
+ * @description 笔记相关文件名前缀
  */
 export const noteFilePrev = 'notes_'
+
+/**
+ * @description 笔记文件存放目录
+ */
+export const noteDirectory = '/note'
 
 /**
  * @description 数据分割符
