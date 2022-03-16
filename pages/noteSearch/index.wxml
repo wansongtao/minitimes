@@ -7,4 +7,8 @@
   <view class="note_fuzzys">
     
   </view>
+  <view class="search_title" wx:if="{{list.length}}">搜索结果</view>
+  <view class="search_result" wx:if="{{list.length}}">
+    <note-card wx:for="{{list}}" wx:key="index"  title="{{item.title}}" content="{{item.content}}" create-time="{{item.createTime}}" card-id="{{item.id}}" />
+  </view>
 </view>
