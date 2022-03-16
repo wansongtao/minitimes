@@ -11,7 +11,7 @@
  * @returns {Boolean} 成功true，失败false
  */
 export const mkdirDirectory = (path, recursive = false) => {
-  if (typeof path !== 'string' || typeof recursive !== 'boolean' ) {
+  if (typeof path !== 'string' || typeof recursive !== 'boolean') {
     console.error('argument type error');
     return false
   }
@@ -25,7 +25,7 @@ export const mkdirDirectory = (path, recursive = false) => {
   try {
     fs.accessSync(`${wx.env.USER_DATA_PATH}${path}`)
     return true
-  } catch(e) {
+  } catch (e) {
     // 目录不存在，创建
     // console.error(e)
   }
@@ -33,8 +33,34 @@ export const mkdirDirectory = (path, recursive = false) => {
   try {
     fs.mkdirSync(`${wx.env.USER_DATA_PATH}${path}`, recursive)
     return true
-  } catch(e) {
+  } catch (e) {
     console.error(e)
     return false
+  }
+}
+
+/**
+ * @description 获取对应目录下的文件列表
+ * @param {string} path 目录路径
+ * @returns {object[]} 成功返回文件列表，失败返回空数组
+ */
+export const getFileList = (path) => {
+  if (typeof path !== 'string') {
+    console.error('argument type error');
+    return []
+  }
+
+  if (path.indexOf('/') !== 0) {
+    path = '/' + path
+  }
+
+  const fs = wx.getFileSystemManager()
+
+  try {
+    const res = fs.readdirSync(`${wx.env.USER_DATA_PATH}${path}`)
+    return res
+  } catch (e) {
+    console.error(e)
+    return []
   }
 }
