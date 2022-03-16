@@ -1,5 +1,5 @@
 // pages/noteList/index.js
-import { separator, noteFilePrev} from '../../config/index'
+import { separator, noteFilePrev, noteDirectory } from '../../config/index'
 import { setFileName, readFile, dataFormatConversion } from '../../utils/util'
 import updateNoteFile from '../../utils/updateNote'
 import dayjs from 'dayjs'
@@ -64,7 +64,7 @@ Page({
    * @returns {Object[]} 成功返回数据列表，失败返回空数组
    */
   getNoteData(date) {
-    const fileName = setFileName(noteFilePrev, date)
+    const fileName = setFileName(noteDirectory, noteFilePrev, date)
     const text = readFile(fileName)
 
     if (!text) {

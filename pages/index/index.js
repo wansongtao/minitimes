@@ -4,7 +4,8 @@ import {
   weeks,
   commonNotice,
   separator,
-  planPrev
+  planPrev,
+  planDirectory
 } from '../../config/index'
 import {
   setFileName,
@@ -143,7 +144,7 @@ Page({
       date = dayjs(date).format('YYYYMM')
     }
 
-    const fileName = setFileName(planPrev, date)
+    const fileName = setFileName(planDirectory, planPrev, date)
     const text = readFile(fileName)
 
     if (text === false) {
@@ -207,7 +208,7 @@ Page({
     const date = dayjs().format('YYYYMM')
     const list = this.planDataSort(this.getFilePlanData(date))
 
-    this.updateDataState(list, setFileName(planPrev, date))
+    this.updateDataState(list, setFileName(planDirectory, planPrev, date))
 
     // 保存当前月份的数据
     this.global.allPlan[date] = list
@@ -425,7 +426,7 @@ Page({
       }
 
       const sortList = this.planDataSort(list)
-      this.updateDataState(sortList, setFileName(planPrev, yearMonth))
+      this.updateDataState(sortList, setFileName(planDirectory, planPrev, yearMonth))
 
       this.global.allPlan[yearMonth] = sortList
 

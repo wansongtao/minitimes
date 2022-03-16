@@ -2,7 +2,8 @@ import dayjs from 'dayjs'
 import {
   noteFilePrev,
   verifyNoteFormat,
-  separator
+  separator,
+  noteDirectory
 } from '../config/index'
 import {
   setFileName,
@@ -24,7 +25,7 @@ const updateNoteFile = (oldVal, newVal) => {
     return false
   }
 
-  const oldFileName = setFileName(noteFilePrev, dayjs(oldVal.createTime).format('YYYYMM'))
+  const oldFileName = setFileName(noteDirectory, noteFilePrev, dayjs(oldVal.createTime).format('YYYYMM'))
 
   const text = readFile(oldFileName)
   if (!text) {
@@ -45,7 +46,7 @@ const updateNoteFile = (oldVal, newVal) => {
     }
   }
 
-  const newFileName = setFileName(noteFilePrev, dayjs(newVal.createTime).format('YYYYMM'))
+  const newFileName = setFileName(noteDirectory, noteFilePrev, dayjs(newVal.createTime).format('YYYYMM'))
   const isSuccess = createLocalFile(newText, newFileName)
 
   // 创建新文件失败，恢复原文件

@@ -4,7 +4,8 @@ import Toast from '../../miniprogram_npm/@vant/weapp/toast/toast'
 import {
     separator,
     verifyNoteFormat,
-    noteFilePrev
+    noteFilePrev,
+    noteDirectory
 } from '../../config/index'
 import {
     setFileName,
@@ -92,7 +93,7 @@ Page({
             return
         }
 
-        const fileName = setFileName(noteFilePrev)
+        const fileName = setFileName(noteDirectory, noteFilePrev)
         const note = readFile(fileName)
         if (note && note.indexOf(data.id) !== -1) {
             wx.showToast({

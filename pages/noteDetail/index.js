@@ -2,7 +2,8 @@
 import dayjs from 'dayjs'
 import {
   separator,
-  noteFilePrev
+  noteFilePrev,
+  noteDirectory
 } from '../../config/index'
 import {
   setFileName,
@@ -55,7 +56,7 @@ Page({
     }
 
     const date = global.date
-    const fileName = setFileName(noteFilePrev, date.replace('/', '').substr(0, 6))
+    const fileName = setFileName(noteDirectory, noteFilePrev, date.replace('/', '').substr(0, 6))
     const text = readFile(fileName)
 
     if (!text) {

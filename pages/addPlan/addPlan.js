@@ -6,7 +6,8 @@ import {
 } from '../../utils/dialog'
 import {
     separator,
-    planPrev
+    planPrev,
+    planDirectory
 } from '../../config/index'
 import {
     writeFile,
@@ -265,7 +266,7 @@ Page({
             return
         }
 
-        const fileName = setFileName(planPrev, dayjs(data.date).format('YYYYMM'))
+        const fileName = setFileName(planDirectory, planPrev, dayjs(data.date).format('YYYYMM'))
 
         const list = this.getFileContent(fileName)
         if (list.length) {

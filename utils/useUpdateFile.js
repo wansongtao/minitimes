@@ -1,7 +1,8 @@
 import dayjs from 'dayjs'
 import {
   planPrev,
-  separator
+  separator,
+  planDirectory
 } from '../config/index'
 import {
   setFileName,
@@ -24,7 +25,7 @@ const useUpdateFile = (oldVal, newVal) => {
     return false
   }
 
-  const oldFileName = setFileName(planPrev, dayjs(oldVal.date).format('YYYYMM'))
+  const oldFileName = setFileName(planDirectory, planPrev, dayjs(oldVal.date).format('YYYYMM'))
 
   const text = readFile(oldFileName)
   if (!text) {
@@ -45,7 +46,7 @@ const useUpdateFile = (oldVal, newVal) => {
     }
   }
 
-  const newFileName = setFileName(planPrev, dayjs(newVal.date).format('YYYYMM'))
+  const newFileName = setFileName(planDirectory, planPrev, dayjs(newVal.date).format('YYYYMM'))
   const isSuccess = createLocalFile(newText, newFileName)
 
   // 创建新文件失败，恢复原文件
