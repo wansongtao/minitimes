@@ -6,19 +6,24 @@ import {
   noteDirectory,
   separator
 } from '../../config/index'
-import { readFile, dataFormatConversion } from '../../utils/util'
+import {
+  readFile,
+  dataFormatConversion
+} from '../../utils/util'
 
 Page({
   data: {
     searchVal: '',
-    list: []
+    list: [],
+    fuzzys: []
   },
   global: {
     timer: null,
-    spacing: 200
+    spacing: 200,
+    result: []
   },
   onLoad: function (options) {
-    
+
   },
   onChange(e) {
     const global = this.global
@@ -32,28 +37,41 @@ Page({
       this.setData({
         searchVal: value
       })
+
+      this.searchContent()
+      const fuzzys = this.global.result.slice(0, 10).map((item) => {
+        return {
+          id: item.id,
+          title: item.title,
+          createTime: item.createTime
+        }
+      })
+
+      this.setData({
+        fuzzys: fuzzys
+      })
     }, global.spacing);
   },
   onSearch() {
-    const files = getFileList(noteDirectory)
-    if (!files.length) {
+    this.searchContent()
+    this.setData({
+      list: this.global.result,
+      fuzzys: []
+    })
+  },
+  onJumpDetail(e) {
+    const id = e.target.dataset.id
+    const item = this.data.fuzzys.find((item) => item.id === id)
+    if (!item) {
+      wx.showToast({
+        title: '未知错误',
+        icon: 'error'
+      })
       return
     }
 
-    files.forEach((item) => {
-      setTimeout(() => {
-        const list = this.fileContentQuery(noteDirectory + '/' + item, this.data.searchVal)
-
-        if (!list.length) {
-          return
-        }
-
-        const newList = [...this.data.list, ...list]
-
-        this.setData({
-          list: newList
-        })
-      }, 0);
+    wx.navigateTo({
+      url: `/pages/noteDetail/index?id=${encodeURIComponent(id)}&date=${encodeURIComponent(item.createTime.substr(0, 10))}`,
     })
   },
   /**
@@ -101,5 +119,31 @@ Page({
 
       return false
     })
+  },
+  /**
+   * @description 从所有文件中找出二十条相关数据，并保存在global中
+   */
+  searchContent() {
+    const files = getFileList(noteDirectory)
+    if (!files.length) {
+      return
+    }
+
+    this.global.result = []
+    const result = this.global.result
+    for (let i = 0; i < files.length; i++) {
+      const item = files[i]
+      const list = this.fileContentQuery(noteDirectory + '/' + item, this.data.searchVal)
+
+      if (!list.length) {
+        continue
+      }
+
+      result.push(...list.slice(0, 20))
+
+      if (result.length >= 20) {
+        return
+      }
+    }
   }
 })

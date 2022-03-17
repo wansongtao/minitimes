@@ -1,4 +1,5 @@
 {
+  "navigationBarTitleText": "笔记搜索",
   "usingComponents": {
     "van-search": "@vant/weapp/search/index",
     "note-card": "/components/NoteCard/index"

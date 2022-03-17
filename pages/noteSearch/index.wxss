@@ -8,6 +8,25 @@ page {
   height: 54px;
 }
 
+.note_fuzzys {
+  position: absolute;
+  top: 54px;
+  left: 10px;
+  box-sizing: border-box;
+  padding: 5px 10px;
+  width: calc(100vw - 54px);
+  background-color: #fff;
+  border-radius: 8px;
+  box-shadow: 0 4px 4px 0 #eeecec;
+}
+
+.note_fuzzys_item {
+  font-size: 12px;
+  color: #999;
+  line-height: 3em;
+  border-bottom: 1px solid #eeebeb;
+}
+
 .search_title {
   padding: 10px;
   font-size: 14px;
@@ -18,5 +37,15 @@ page {
   overflow-y: auto;
   box-sizing: border-box;
   padding: 0 10px;
+  height: calc(100vh - 100px);
+}
+
+.empty {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-sizing: border-box;
+  padding: 0 10px;
+  width: 100%;
   height: calc(100vh - 100px);
 }

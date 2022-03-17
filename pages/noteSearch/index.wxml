@@ -1,14 +1,18 @@
 <!--pages/noteSearch/index.wxml-->
 <view class="note_search">
-  <van-search value="{{ searchVal }}" placeholder="请输入搜索关键词" use-action-slot bind:change="onChange" bind:search="onSearch">
+  <van-search value="{{ searchVal }}" placeholder="请输入搜索关键词(标题、时间、内容)" use-action-slot bind:change="onChange" bind:search="onSearch">
     <view slot="action" bind:tap="onSearch">搜索</view>
   </van-search>
 
-  <view class="note_fuzzys">
-    
+  <view class="note_fuzzys" wx:if="{{fuzzys.length}}">
+    <view class="note_fuzzys_item" wx:for="{{fuzzys}}" wx:key="index" data-id="{{item.id}}" bindtap="onJumpDetail">{{item.title}}</view>
   </view>
   <view class="search_title" wx:if="{{list.length}}">搜索结果</view>
   <view class="search_result" wx:if="{{list.length}}">
     <note-card wx:for="{{list}}" wx:key="index"  title="{{item.title}}" content="{{item.content}}" create-time="{{item.createTime}}" card-id="{{item.id}}" />
+  </view>
+
+  <view class="empty" wx:if="{{!list.length}}">
+    <image src="cloud://cloud1-9g2nav8vcc28213c.636c-cloud1-9g2nav8vcc28213c-1307808166/empty.png" mode="widthFix"></image>
   </view>
 </view>
